@@ -1,4 +1,4 @@
-package xyz.pongsakorn.policeeye;
+package xyz.pongsakorn.policeeye.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -21,6 +21,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import xyz.pongsakorn.policeeye.widget.DrawingView;
+import xyz.pongsakorn.policeeye.R;
 
 public class SketchActivity extends AppCompatActivity {
 

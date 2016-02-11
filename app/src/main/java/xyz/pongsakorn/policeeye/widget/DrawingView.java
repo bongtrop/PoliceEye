@@ -1,4 +1,4 @@
-package xyz.pongsakorn.policeeye;
+package xyz.pongsakorn.policeeye.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import xyz.pongsakorn.policeeye.R;
 
 /**
  * Created by Pongsakorn on 1/15/2016.

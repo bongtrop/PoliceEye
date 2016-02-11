@@ -1,8 +1,6 @@
-package xyz.pongsakorn.policeeye;
+package xyz.pongsakorn.policeeye.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import xyz.pongsakorn.policeeye.R;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 

@@ -1,11 +1,8 @@
-package xyz.pongsakorn.policeeye;
+package xyz.pongsakorn.policeeye.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
@@ -15,15 +12,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+
+import xyz.pongsakorn.policeeye.adapter.HistoryAdapter;
+import xyz.pongsakorn.policeeye.R;
 
 public class HistoryActivity extends AppCompatActivity {
 
