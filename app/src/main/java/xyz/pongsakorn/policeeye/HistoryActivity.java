@@ -1,6 +1,8 @@
 package xyz.pongsakorn.policeeye;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,7 +27,7 @@ import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    private final String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+
+    private final String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
             "/PoliceEye";
 
     private static final int GET_INIT_AMOUNT = 10;
@@ -49,9 +52,9 @@ public class HistoryActivity extends AppCompatActivity {
 
 
         File dir = new File(file_path);
-        if(dir.exists()) {
+        if (dir.exists()) {
             File[] files = dir.listFiles();
-            for (int i = files.length-1;i >= 0;i--) {
+            for (int i = files.length - 1; i >= 0; i--) {
                 try {
                     JSONObject tmp = new JSONObject();
                     tmp.put("path", files[i].getAbsolutePath());
@@ -60,7 +63,7 @@ public class HistoryActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            if (recycViewAdapter==null) {
+            if (recycViewAdapter == null) {
                 recycViewAdapter = new HistoryAdapter(this, dd);
                 //notificationFetch.getInitNoti(GET_INIT_AMOUNT, new InitNotificationListener(act, recycViewAdapter, scrollListener));
             }
@@ -107,8 +110,11 @@ public class HistoryActivity extends AppCompatActivity {
         fabSketch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HistoryActivity.this, SketchActivity.class);
-                startActivityForResult(intent, 0);
+                /*Intent intent = new Intent(HistoryActivity.this, SketchActivity.class);
+                startActivityForResult(intent, 0);*/
+
+                //openApp(HistoryActivity.this, "com.adsk.sketchbookhdexpress");
+                openApp(HistoryActivity.this, "com.sonymobile.sketch");
             }
         });
     }
@@ -117,12 +123,13 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==0) {
+        Log.e("his", "req "+requestCode+", res "+resultCode);
+        if (requestCode == 0) {
             File dir = new File(file_path);
-            if(dir.exists()) {
+            if (dir.exists()) {
                 dd.clear();
                 File[] files = dir.listFiles();
-                for (int i = files.length-1;i >= 0;i--) {
+                for (int i = files.length - 1; i >= 0; i--) {
                     try {
                         JSONObject tmp = new JSONObject();
                         tmp.put("path", files[i].getAbsolutePath());
@@ -133,6 +140,21 @@ public class HistoryActivity extends AppCompatActivity {
                 }
                 recycViewAdapter.notifyDataSetChanged();
             }
+        }
+    }
+
+    public static boolean openApp(Context context, String packageName) {
+        PackageManager manager = context.getPackageManager();
+        try {
+            Intent i = manager.getLaunchIntentForPackage(packageName);
+            if (i == null) {
+                throw new PackageManager.NameNotFoundException();
+            }
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            context.startActivity(i);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 }
