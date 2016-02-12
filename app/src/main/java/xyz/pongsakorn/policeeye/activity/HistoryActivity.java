@@ -1,10 +1,13 @@
 package xyz.pongsakorn.policeeye.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -45,19 +48,25 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         initInstances();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+
         dd = new ArrayList<>();
 
 
         File dir = new File(file_path);
         if (dir.exists()) {
             File[] files = dir.listFiles();
-            for (int i = files.length - 1; i >= 0; i--) {
-                try {
-                    JSONObject tmp = new JSONObject();
-                    tmp.put("path", files[i].getAbsolutePath());
-                    dd.add(tmp);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            if (files != null) {
+                for (int i = files.length - 1; i >= 0; i--) {
+                    try {
+                        JSONObject tmp = new JSONObject();
+                        tmp.put("path", files[i].getAbsolutePath());
+                        dd.add(tmp);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             if (recycViewAdapter == null) {
@@ -88,6 +97,14 @@ public class HistoryActivity extends AppCompatActivity {
         //recyclerView.setOnScrollListener(scrollListener);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (!(grantResults.length > 0 && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED )) {
+            finish();
+        }
+    }
+
     private void initInstances() {
         swipe_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -110,8 +127,11 @@ public class HistoryActivity extends AppCompatActivity {
                 /*Intent intent = new Intent(HistoryActivity.this, SketchActivity.class);
                 startActivityForResult(intent, 0);*/
 
+                Intent intent = new Intent(HistoryActivity.this, IdentikitActivity.class);
+                startActivityForResult(intent, 0);
+
                 //openApp(HistoryActivity.this, "com.adsk.sketchbookhdexpress");
-                openApp(HistoryActivity.this, "com.sonymobile.sketch");
+                //openApp(HistoryActivity.this, "com.sonymobile.sketch");
             }
         });
     }
@@ -120,19 +140,21 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.e("his", "req "+requestCode+", res "+resultCode);
+        Log.e("his", "req " + requestCode + ", res " + resultCode);
         if (requestCode == 0) {
             File dir = new File(file_path);
             if (dir.exists()) {
                 dd.clear();
                 File[] files = dir.listFiles();
-                for (int i = files.length - 1; i >= 0; i--) {
-                    try {
-                        JSONObject tmp = new JSONObject();
-                        tmp.put("path", files[i].getAbsolutePath());
-                        dd.add(tmp);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                if (files != null) {
+                    for (int i = files.length - 1; i >= 0; i--) {
+                        try {
+                            JSONObject tmp = new JSONObject();
+                            tmp.put("path", files[i].getAbsolutePath());
+                            dd.add(tmp);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 recycViewAdapter.notifyDataSetChanged();

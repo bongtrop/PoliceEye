@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="xyz.pongsakorn.policeeye.activity.IdentikitActivity">
+
+    <ImageView
+        android:id="@+id/ivHair"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:src="@mipmap/hair1"/>
+
+    <ImageView
+        android:id="@+id/ivJaw"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:src="@mipmap/head1"/>
+
+    <ImageView
+        android:id="@+id/ivEyebrows"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:src="@mipmap/eyebrows1"/>
+
+    <ImageView
+        android:id="@+id/ivEyes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:src="@mipmap/eyes1"/>
+
+    <ImageView
+        android:id="@+id/ivNose"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:src="@mipmap/nose1"/>
+
+    <ImageView
+        android:id="@+id/ivMouth"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:src="@mipmap/mouth1"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycViewFaceComposite"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_face_composite_height"
+        android:layout_alignParentBottom="true" />
+
+    <!--<Button
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="1"/>
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btn1"
+        android:text="2"/>-->
+
+</RelativeLayout>
