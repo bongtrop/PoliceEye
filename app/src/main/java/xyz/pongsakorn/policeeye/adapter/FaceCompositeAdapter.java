@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import xyz.pongsakorn.policeeye.model.FacialCompositeListModel;
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.activity.IdentikitActivity;
 
@@ -20,7 +21,7 @@ import xyz.pongsakorn.policeeye.activity.IdentikitActivity;
 
 public class FaceCompositeAdapter extends RecyclerView.Adapter<FaceCompositeAdapter.FaceCompositeViewHolder> {
 
-    ArrayList<IdentikitActivity.FacialComposite> mDataset;
+    ArrayList<FacialCompositeListModel> mDataset;
 
     View rootView;
     long uid;
@@ -34,12 +35,12 @@ public class FaceCompositeAdapter extends RecyclerView.Adapter<FaceCompositeAdap
         this.act = act;
         this.mListener = mListener;
         mDataset = new ArrayList<>();
-        mDataset.add(IdentikitActivity.FacialComposite.HAIR);
-        mDataset.add(IdentikitActivity.FacialComposite.EYEBROWS);
-        mDataset.add(IdentikitActivity.FacialComposite.EYES);
-        mDataset.add(IdentikitActivity.FacialComposite.NOSE);
-        mDataset.add(IdentikitActivity.FacialComposite.MOUTH);
-        mDataset.add(IdentikitActivity.FacialComposite.JAW);
+        mDataset.add(new FacialCompositeListModel(IdentikitActivity.FacialComposite.HAIR));
+        mDataset.add(new FacialCompositeListModel(IdentikitActivity.FacialComposite.EYEBROWS));
+        mDataset.add(new FacialCompositeListModel(IdentikitActivity.FacialComposite.EYES));
+        mDataset.add(new FacialCompositeListModel(IdentikitActivity.FacialComposite.NOSE));
+        mDataset.add(new FacialCompositeListModel(IdentikitActivity.FacialComposite.MOUTH));
+        mDataset.add(new FacialCompositeListModel(IdentikitActivity.FacialComposite.JAW));
         activePos = 0;
     }
 
@@ -49,43 +50,35 @@ public class FaceCompositeAdapter extends RecyclerView.Adapter<FaceCompositeAdap
         return new FaceCompositeViewHolder(itemView);
     }
 
-    /*private int getCurrentPosition(MinimalUserModel data) {
-        for (int i=0;i<mDataset.size();i++) {
-            if (mDataset.get(i).uid==data.uid)
-                return i;
-        }
-        return -1;
-    }*/
-
     @Override
     public void onBindViewHolder(final FaceCompositeViewHolder holder, final int position) {
 
-        final IdentikitActivity.FacialComposite data = mDataset.get(position);
+        final IdentikitActivity.FacialComposite facialComposite = mDataset.get(position).facialComposite;
 
         int res = R.mipmap.ic_pencil;
-        switch (data) {
+        switch (facialComposite) {
             case JAW:
-                res = R.mipmap.ic_pencil;
+                res = R.mipmap.jaw505;
                 holder.txtName.setText("jaw");
                 break;
             case HAIR:
-                res = R.mipmap.ic_pencil;
+                res = R.mipmap.hair505;
                 holder.txtName.setText("hair");
                 break;
             case EYEBROWS:
-                res = R.mipmap.ic_pencil;
+                res = R.mipmap.eyebrows505;
                 holder.txtName.setText("eyebrows");
                 break;
             case EYES:
-                res = R.mipmap.ic_eraser;
+                res = R.mipmap.eyes505;
                 holder.txtName.setText("eyes");
                 break;
             case NOSE:
-                res = R.mipmap.ic_eraser;
+                res = R.mipmap.nose505;
                 holder.txtName.setText("nose");
                 break;
             case MOUTH:
-                res = R.mipmap.ic_eraser;
+                res = R.mipmap.mouth505;
                 holder.txtName.setText("mouth");
                 break;
         }
@@ -97,7 +90,7 @@ public class FaceCompositeAdapter extends RecyclerView.Adapter<FaceCompositeAdap
         holder.imComposite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onSelect(mDataset.get(position));
+                mListener.onSelect(facialComposite, mDataset.get(position).selectedStylePos);
                 int tmp = activePos;
                 activePos = position;
                 notifyItemChanged(tmp);
@@ -111,8 +104,12 @@ public class FaceCompositeAdapter extends RecyclerView.Adapter<FaceCompositeAdap
         return mDataset.size();
     }
 
+    public void changeSelectedStylePos(int selectedStylePos) {
+        mDataset.get(activePos).setSelectedStylePos(selectedStylePos);
+    }
+
     public interface AdapterListener {
-        void onSelect(IdentikitActivity.FacialComposite composite);
+        void onSelect(IdentikitActivity.FacialComposite composite, int selectedStylePos);
     }
 
     public static class FaceCompositeViewHolder extends RecyclerView.ViewHolder {

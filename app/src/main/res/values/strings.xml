@@ -3,4 +3,35 @@
     <string name="action_new">New</string>
     <string name="action_open">Open</string>
     <string name="action_save">Save</string>
+
+    <array name="res_hair_styles">
+        <item>@mipmap/hair505</item>
+        <item>@mipmap/hair493</item>
+    </array>
+
+    <array name="res_jaw_styles">
+        <item>@mipmap/jaw505</item>
+        <item>@mipmap/jaw493</item>
+    </array>
+
+    <array name="res_eyebrows_styles">
+        <item>@mipmap/eyebrows505</item>
+        <item>@mipmap/eyebrows493</item>
+    </array>
+
+    <array name="res_eyes_styles">
+        <item>@mipmap/eyes505</item>
+        <item>@mipmap/eyes493</item>
+    </array>
+
+    <array name="res_nose_styles">
+        <item>@mipmap/nose505</item>
+        <item>@mipmap/nose493</item>
+    </array>
+
+    <array name="res_mouth_styles">
+        <item>@mipmap/mouth505</item>
+        <item>@mipmap/mouth493</item>
+    </array>
+
 </resources>
