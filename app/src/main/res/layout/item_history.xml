@@ -29,9 +29,9 @@
                 android:adjustViewBounds="true"
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/imagetest"
-                android:background="@android:color/black"
+                android:background="@drawable/shape_history_photo"
                 android:padding="1dp"
-                android:scaleType="centerCrop"/>
+                android:scaleType="fitCenter"/>
 
             <LinearLayout
                 android:layout_width="0dp"

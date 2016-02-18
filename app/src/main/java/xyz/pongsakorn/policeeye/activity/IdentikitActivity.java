@@ -1,17 +1,30 @@
 package xyz.pongsakorn.policeeye.activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.adapter.FaceCompositeAdapter;
@@ -21,6 +34,7 @@ public class IdentikitActivity extends AppCompatActivity {
 
     private int INVALID_POINTER_ID = -1;
     private int mActivePointerId = INVALID_POINTER_ID;
+    private RelativeLayout layoutSketch;
     private ImageView ivJaw;
     private ImageView ivHair;
     private ImageView ivEyebrows;
@@ -49,6 +63,7 @@ public class IdentikitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identikit);
 
+        layoutSketch = (RelativeLayout)findViewById(R.id.layoutSketch);
         ivJaw = (ImageView)findViewById(R.id.ivJaw);
         ivHair = (ImageView)findViewById(R.id.ivHair);
         ivEyebrows = (ImageView)findViewById(R.id.ivEyebrows);
@@ -283,5 +298,53 @@ public class IdentikitActivity extends AppCompatActivity {
 
     public enum FacialComposite {
         JAW, HAIR, EYES, EYEBROWS, NOSE ,MOUTH
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_identikit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_new) {
+            //drawingView.clear();
+        } else if (id == R.id.action_save) {
+            layoutSketch.setDrawingCacheEnabled(true);
+            Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
+            layoutSketch.setDrawingCacheEnabled(false);
+
+            if (result==null)
+                Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
+
+            String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+
+                    "/PoliceEye";
+            File dir = new File(file_path);
+            if(!dir.exists())
+                dir.mkdirs();
+
+            File file = new File(dir, createPhotoName());
+            FileOutputStream fOut = null;
+            try {
+                fOut = new FileOutputStream(file);
+                result.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                fOut.flush();
+                fOut.close();
+                Toast.makeText(this, "Save Done", Toast.LENGTH_SHORT).show();
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+            } catch (IOException e) {
+                Toast.makeText(this, "Save Fail", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public String createPhotoName() {
+        return new SimpleDateFormat("yyyyMMdd-hhmmss'.jpg'").format(new Date());
     }
 }
