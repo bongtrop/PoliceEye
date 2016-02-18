@@ -58,27 +58,27 @@ public class FaceCompositeAdapter extends RecyclerView.Adapter<FaceCompositeAdap
         int res = R.mipmap.ic_pencil;
         switch (facialComposite) {
             case JAW:
-                res = R.mipmap.jaw505;
+                res = R.mipmap.jaw487;
                 holder.txtName.setText("jaw");
                 break;
             case HAIR:
-                res = R.mipmap.hair505;
+                res = R.mipmap.hair487;
                 holder.txtName.setText("hair");
                 break;
             case EYEBROWS:
-                res = R.mipmap.eyebrows505;
+                res = R.mipmap.eyebrows487;
                 holder.txtName.setText("eyebrows");
                 break;
             case EYES:
-                res = R.mipmap.eyes505;
+                res = R.mipmap.eyes487;
                 holder.txtName.setText("eyes");
                 break;
             case NOSE:
-                res = R.mipmap.nose505;
+                res = R.mipmap.nose487;
                 holder.txtName.setText("nose");
                 break;
             case MOUTH:
-                res = R.mipmap.mouth505;
+                res = R.mipmap.mouth487;
                 holder.txtName.setText("mouth");
                 break;
         }

@@ -5,33 +5,69 @@
     <string name="action_save">Save</string>
 
     <array name="res_hair_styles">
-        <item>@mipmap/hair505</item>
+        <item>@mipmap/hair487</item>
+        <item>@mipmap/hair488</item>
+        <item>@mipmap/hair489</item>
+        <item>@mipmap/hair490</item>
+        <item>@mipmap/hair491</item>
+        <item>@mipmap/hair492</item>
         <item>@mipmap/hair493</item>
+        <item>@mipmap/hair505</item>
     </array>
 
     <array name="res_jaw_styles">
-        <item>@mipmap/jaw505</item>
+        <item>@mipmap/jaw487</item>
+        <item>@mipmap/jaw488</item>
+        <item>@mipmap/jaw489</item>
+        <item>@mipmap/jaw490</item>
+        <item>@mipmap/jaw491</item>
+        <item>@mipmap/jaw492</item>
         <item>@mipmap/jaw493</item>
+        <item>@mipmap/jaw505</item>
     </array>
 
     <array name="res_eyebrows_styles">
-        <item>@mipmap/eyebrows505</item>
+        <item>@mipmap/eyebrows487</item>
+        <item>@mipmap/eyebrows488</item>
+        <item>@mipmap/eyebrows489</item>
+        <item>@mipmap/eyebrows490</item>
+        <item>@mipmap/eyebrows491</item>
+        <item>@mipmap/eyebrows492</item>
         <item>@mipmap/eyebrows493</item>
+        <item>@mipmap/eyebrows505</item>
     </array>
 
     <array name="res_eyes_styles">
-        <item>@mipmap/eyes505</item>
+        <item>@mipmap/eyes487</item>
+        <item>@mipmap/eyes488</item>
+        <item>@mipmap/eyes489</item>
+        <item>@mipmap/eyes490</item>
+        <item>@mipmap/eyes491</item>
+        <item>@mipmap/eyes492</item>
         <item>@mipmap/eyes493</item>
+        <item>@mipmap/eyes505</item>
     </array>
 
     <array name="res_nose_styles">
-        <item>@mipmap/nose505</item>
+        <item>@mipmap/nose487</item>
+        <item>@mipmap/nose488</item>
+        <item>@mipmap/nose489</item>
+        <item>@mipmap/nose490</item>
+        <item>@mipmap/nose491</item>
+        <item>@mipmap/nose492</item>
         <item>@mipmap/nose493</item>
+        <item>@mipmap/nose505</item>
     </array>
 
     <array name="res_mouth_styles">
-        <item>@mipmap/mouth505</item>
+        <item>@mipmap/mouth487</item>
+        <item>@mipmap/mouth488</item>
+        <item>@mipmap/mouth489</item>
+        <item>@mipmap/mouth490</item>
+        <item>@mipmap/mouth491</item>
+        <item>@mipmap/mouth492</item>
         <item>@mipmap/mouth493</item>
+        <item>@mipmap/mouth505</item>
     </array>
 
 </resources>
