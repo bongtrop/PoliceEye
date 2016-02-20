@@ -28,8 +28,8 @@
             android:id="@+id/ivJaw"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="140dp"
-            android:layout_marginLeft="120dp"
+            android:layout_marginTop="@dimen/margin_top_jaw"
+            android:layout_marginLeft="@dimen/margin_left_jaw"
             android:scaleType="matrix"
             android:src="@mipmap/jaw505"/>
 
@@ -37,8 +37,8 @@
             android:id="@+id/ivHair"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="70dp"
-            android:layout_marginLeft="125dp"
+            android:layout_marginTop="@dimen/margin_top_hair"
+            android:layout_marginLeft="@dimen/margin_left_hair"
             android:scaleType="matrix"
             android:src="@mipmap/hair505"/>
 
@@ -46,8 +46,8 @@
             android:id="@+id/ivEyebrows"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="150dp"
-            android:layout_marginLeft="140dp"
+            android:layout_marginTop="@dimen/margin_top_eyebrows"
+            android:layout_marginLeft="@dimen/margin_left_eyebrows"
             android:scaleType="matrix"
             android:src="@mipmap/eyebrows505"/>
 
@@ -55,8 +55,8 @@
             android:id="@+id/ivEyes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="165dp"
-            android:layout_marginLeft="140dp"
+            android:layout_marginTop="@dimen/margin_top_eyes"
+            android:layout_marginLeft="@dimen/margin_left_eyes"
             android:scaleType="matrix"
             android:src="@mipmap/eyes505"/>
 
@@ -64,8 +64,8 @@
             android:id="@+id/ivNose"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="170dp"
-            android:layout_marginLeft="170dp"
+            android:layout_marginTop="@dimen/margin_top_nose"
+            android:layout_marginLeft="@dimen/margin_left_nose"
             android:scaleType="matrix"
             android:src="@mipmap/nose505"/>
 
@@ -73,8 +73,8 @@
             android:id="@+id/ivMouth"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="215dp"
-            android:layout_marginLeft="160dp"
+            android:layout_marginTop="@dimen/margin_top_mouth"
+            android:layout_marginLeft="@dimen/margin_left_mouth"
             android:scaleType="matrix"
             android:src="@mipmap/mouth505"/>
 

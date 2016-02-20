@@ -49,29 +49,41 @@ public class IdentikitActivity extends AppCompatActivity {
     private float mLastTouchX;
     private float mLastTouchY;
     private float initScale = 2f;
-    private float scaleJaw = initScale;
-    private float scaleHair = initScale;
-    private float scaleEyebrows = initScale;
-    private float scaleEyes = initScale;
-    private float scaleNose = initScale;
-    private float scaleMouth = initScale;
+    private float scaleJaw;
+    private float scaleHair;
+    private float scaleEyebrows;
+    private float scaleEyes;
+    private float scaleNose;
+    private float scaleMouth;
     private ScaleGestureDetector SGD;
-    private FacialComposite currentComposite = FacialComposite.HAIR;
+    private FacialComposite currentComposite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identikit);
 
-        layoutSketch = (RelativeLayout)findViewById(R.id.layoutSketch);
-        ivJaw = (ImageView)findViewById(R.id.ivJaw);
-        ivHair = (ImageView)findViewById(R.id.ivHair);
-        ivEyebrows = (ImageView)findViewById(R.id.ivEyebrows);
-        ivEyes = (ImageView)findViewById(R.id.ivEyes);
-        ivNose = (ImageView)findViewById(R.id.ivNose);
-        ivMouth = (ImageView)findViewById(R.id.ivMouth);
-        recycViewFaceCompStyle =(RecyclerView)findViewById(R.id.recycViewFaceCompStyle);
-        recycViewFaceComposite =(RecyclerView)findViewById(R.id.recycViewFaceComposite);
+        layoutSketch = (RelativeLayout) findViewById(R.id.layoutSketch);
+        ivJaw = (ImageView) findViewById(R.id.ivJaw);
+        ivHair = (ImageView) findViewById(R.id.ivHair);
+        ivEyebrows = (ImageView) findViewById(R.id.ivEyebrows);
+        ivEyes = (ImageView) findViewById(R.id.ivEyes);
+        ivNose = (ImageView) findViewById(R.id.ivNose);
+        ivMouth = (ImageView) findViewById(R.id.ivMouth);
+        recycViewFaceCompStyle = (RecyclerView) findViewById(R.id.recycViewFaceCompStyle);
+        recycViewFaceComposite = (RecyclerView) findViewById(R.id.recycViewFaceComposite);
+
+        initValue();
+    }
+
+    private void initValue() {
+        currentComposite = FacialComposite.HAIR;
+        scaleJaw = initScale;
+        scaleHair = initScale;
+        scaleEyebrows = initScale;
+        scaleEyes = initScale;
+        scaleNose = initScale;
+        scaleMouth = initScale;
 
         matrix.setScale(initScale, initScale);
         ivJaw.setImageMatrix(matrix);
@@ -80,6 +92,21 @@ public class IdentikitActivity extends AppCompatActivity {
         ivEyes.setImageMatrix(matrix);
         ivNose.setImageMatrix(matrix);
         ivMouth.setImageMatrix(matrix);
+
+        ivJaw.setVisibility(View.GONE);
+        ivHair.setVisibility(View.GONE);
+        ivEyebrows.setVisibility(View.GONE);
+        ivEyes.setVisibility(View.GONE);
+        ivNose.setVisibility(View.GONE);
+        ivMouth.setVisibility(View.GONE);
+
+        setViewMargin(ivJaw, (int) getResources().getDimension(R.dimen.margin_left_jaw), (int) getResources().getDimension(R.dimen.margin_top_jaw));
+        setViewMargin(ivHair, (int) getResources().getDimension(R.dimen.margin_left_hair), (int) getResources().getDimension(R.dimen.margin_top_hair));
+        setViewMargin(ivEyebrows, (int) getResources().getDimension(R.dimen.margin_left_eyebrows), (int) getResources().getDimension(R.dimen.margin_top_eyebrows));
+        setViewMargin(ivEyes, (int) getResources().getDimension(R.dimen.margin_left_eyes), (int) getResources().getDimension(R.dimen.margin_top_eyes));
+        setViewMargin(ivNose, (int) getResources().getDimension(R.dimen.margin_left_nose), (int) getResources().getDimension(R.dimen.margin_top_nose));
+        setViewMargin(ivMouth, (int) getResources().getDimension(R.dimen.margin_left_mouth), (int) getResources().getDimension(R.dimen.margin_top_mouth));
+
         recycViewFaceCompStyle.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recycViewFaceComposite.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         faceCompStyleAdapter = new FaceCompositeStyleAdapter(this, FacialComposite.HAIR, new FaceCompositeStyleAdapter.AdapterListener() {
@@ -87,25 +114,33 @@ public class IdentikitActivity extends AppCompatActivity {
             public void onSelect(int resId, int selectedStylePos) {
                 switch (currentComposite) {
                     case JAW:
-                        ivJaw.setImageResource(resId);
+                        setImage(ivJaw, resId);
                         break;
                     case HAIR:
-                        ivHair.setImageResource(resId);
+                        setImage(ivHair, resId);
                         break;
                     case EYEBROWS:
-                        ivEyebrows.setImageResource(resId);
+                        setImage(ivEyebrows, resId);
                         break;
                     case EYES:
-                        ivEyes.setImageResource(resId);
+                        setImage(ivEyes, resId);
                         break;
                     case NOSE:
-                        ivNose.setImageResource(resId);
+                        setImage(ivNose, resId);
                         break;
                     case MOUTH:
-                        ivMouth.setImageResource(resId);
+                        setImage(ivMouth, resId);
                         break;
                 }
                 faceCompositeAdapter.changeSelectedStylePos(selectedStylePos);
+            }
+
+            private void setImage(ImageView view, int resId) {
+                if (resId == R.mipmap.hide)
+                    view.setVisibility(View.GONE);
+                else
+                    view.setVisibility(View.VISIBLE);
+                view.setImageResource(resId);
             }
         });
         faceCompositeAdapter = new FaceCompositeAdapter(this, new FaceCompositeAdapter.AdapterListener() {
@@ -117,7 +152,7 @@ public class IdentikitActivity extends AppCompatActivity {
         });
         recycViewFaceCompStyle.setAdapter(faceCompStyleAdapter);
         recycViewFaceComposite.setAdapter(faceCompositeAdapter);
-        SGD = new ScaleGestureDetector(this,new ScaleListener());
+        SGD = new ScaleGestureDetector(this, new ScaleListener());
     }
 
     @Override
@@ -258,26 +293,32 @@ public class IdentikitActivity extends AppCompatActivity {
             matrix.setScale(scale, scale);
             switch (currentComposite) {
                 case JAW:
+                    if (ivJaw.getVisibility() == View.GONE) return true;
                     ivJaw.setImageMatrix(matrix);
                     scaleJaw = scale;
                     break;
                 case HAIR:
+                    if (ivHair.getVisibility() == View.GONE) return true;
                     ivHair.setImageMatrix(matrix);
                     scaleHair = scale;
                     break;
                 case EYEBROWS:
+                    if (ivEyebrows.getVisibility() == View.GONE) return true;
                     ivEyebrows.setImageMatrix(matrix);
                     scaleEyebrows = scale;
                     break;
                 case EYES:
+                    if (ivEyes.getVisibility() == View.GONE) return true;
                     ivEyes.setImageMatrix(matrix);
                     scaleEyes = scale;
                     break;
                 case NOSE:
+                    if (ivNose.getVisibility() == View.GONE) return true;
                     ivNose.setImageMatrix(matrix);
                     scaleNose = scale;
                     break;
                 case MOUTH:
+                    if (ivMouth.getVisibility() == View.GONE) return true;
                     ivMouth.setImageMatrix(matrix);
                     scaleMouth = scale;
                     break;
@@ -287,6 +328,8 @@ public class IdentikitActivity extends AppCompatActivity {
     }
 
     private void moveView(View view, float dx, float dy) {
+        if (view.getVisibility() == View.GONE)
+            return;
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
         int maxPadding = (int) (360 * getResources().getDisplayMetrics().density);
         layoutParams.leftMargin = Math.max(0, Math.min((int) (layoutParams.leftMargin + dx), maxPadding));
@@ -296,8 +339,15 @@ public class IdentikitActivity extends AppCompatActivity {
         view.setLayoutParams(layoutParams);
     }
 
+    private void setViewMargin(View view, int leftMargin, int topMargin) {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        layoutParams.leftMargin = leftMargin;
+        layoutParams.topMargin = topMargin;
+        view.setLayoutParams(layoutParams);
+    }
+
     public enum FacialComposite {
-        JAW, HAIR, EYES, EYEBROWS, NOSE ,MOUTH
+        JAW, HAIR, EYES, EYEBROWS, NOSE, MOUTH
     }
 
     @Override
@@ -311,19 +361,19 @@ public class IdentikitActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_new) {
-            //drawingView.clear();
+            initValue();
         } else if (id == R.id.action_save) {
             layoutSketch.setDrawingCacheEnabled(true);
             Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
             layoutSketch.setDrawingCacheEnabled(false);
 
-            if (result==null)
+            if (result == null)
                 Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
 
-            String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+
+            String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
                     "/PoliceEye";
             File dir = new File(file_path);
-            if(!dir.exists())
+            if (!dir.exists())
                 dir.mkdirs();
 
             File file = new File(dir, createPhotoName());

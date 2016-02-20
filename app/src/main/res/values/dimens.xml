@@ -5,4 +5,17 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="list_face_composite_height">60dp</dimen>
+
+    <dimen name="margin_top_jaw">140dp</dimen>
+    <dimen name="margin_left_jaw">120dp</dimen>
+    <dimen name="margin_top_hair">70dp</dimen>
+    <dimen name="margin_left_hair">125dp</dimen>
+    <dimen name="margin_top_eyebrows">150dp</dimen>
+    <dimen name="margin_left_eyebrows">140dp</dimen>
+    <dimen name="margin_top_eyes">165dp</dimen>
+    <dimen name="margin_left_eyes">140dp</dimen>
+    <dimen name="margin_top_nose">170dp</dimen>
+    <dimen name="margin_left_nose">170dp</dimen>
+    <dimen name="margin_top_mouth">215dp</dimen>
+    <dimen name="margin_left_mouth">160dp</dimen>
 </resources>

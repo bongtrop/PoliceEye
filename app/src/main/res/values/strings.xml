@@ -5,6 +5,7 @@
     <string name="action_save">Save</string>
 
     <array name="res_hair_styles">
+        <item>@mipmap/hide</item>
         <item>@mipmap/hair487</item>
         <item>@mipmap/hair488</item>
         <item>@mipmap/hair489</item>
@@ -16,6 +17,7 @@
     </array>
 
     <array name="res_jaw_styles">
+        <item>@mipmap/hide</item>
         <item>@mipmap/jaw487</item>
         <item>@mipmap/jaw488</item>
         <item>@mipmap/jaw489</item>
@@ -27,6 +29,7 @@
     </array>
 
     <array name="res_eyebrows_styles">
+        <item>@mipmap/hide</item>
         <item>@mipmap/eyebrows487</item>
         <item>@mipmap/eyebrows488</item>
         <item>@mipmap/eyebrows489</item>
@@ -38,6 +41,7 @@
     </array>
 
     <array name="res_eyes_styles">
+        <item>@mipmap/hide</item>
         <item>@mipmap/eyes487</item>
         <item>@mipmap/eyes488</item>
         <item>@mipmap/eyes489</item>
@@ -49,6 +53,7 @@
     </array>
 
     <array name="res_nose_styles">
+        <item>@mipmap/hide</item>
         <item>@mipmap/nose487</item>
         <item>@mipmap/nose488</item>
         <item>@mipmap/nose489</item>
@@ -60,6 +65,7 @@
     </array>
 
     <array name="res_mouth_styles">
+        <item>@mipmap/hide</item>
         <item>@mipmap/mouth487</item>
         <item>@mipmap/mouth488</item>
         <item>@mipmap/mouth489</item>
