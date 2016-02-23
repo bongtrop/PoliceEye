@@ -43,7 +43,7 @@ public class SketchActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (drawingView.getTool()==DrawingView.PENCIL) {
+                if (drawingView.getTool() == DrawingView.PENCIL) {
                     drawingView.setTool(DrawingView.ERASER);
                     fab.setImageResource(R.mipmap.ic_eraser);
                 } else {
@@ -61,7 +61,7 @@ public class SketchActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (!(grantResults.length > 0 && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED )) {
+        if (!(grantResults.length > 0 && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED)) {
             finish();
         }
     }
@@ -78,20 +78,18 @@ public class SketchActivity extends AppCompatActivity {
 
         if (id == R.id.action_new) {
             drawingView.clear();
-        }
-        else if (id == R.id.action_open) {
-            Toast.makeText(this,"Cooming Soon",Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.action_save) {
+        } else if (id == R.id.action_open) {
+            Toast.makeText(this, "Cooming Soon", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_save) {
             Bitmap result = drawingView.getBitmap();
 
-            if (result==null)
+            if (result == null)
                 Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
 
-            String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+
+            String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
                     "/PoliceEye";
             File dir = new File(file_path);
-            if(!dir.exists())
+            if (!dir.exists())
                 dir.mkdirs();
 
             File file = new File(dir, createPhotoName());

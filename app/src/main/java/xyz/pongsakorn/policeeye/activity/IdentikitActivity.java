@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -335,7 +336,7 @@ public class IdentikitActivity extends AppCompatActivity {
         layoutParams.leftMargin = Math.max(0, Math.min((int) (layoutParams.leftMargin + dx), maxPadding));
         layoutParams.topMargin = Math.max(0, Math.min((int) (layoutParams.topMargin + dy), maxPadding));
         /*float tmp = getResources().getDisplayMetrics().density;
-        Log.e("id kit act", layoutParams.leftMargin / tmp+","+layoutParams.topMargin / tmp);*/
+        Log.e("id kit act", layoutParams.leftMargin / tmp + "," + layoutParams.topMargin / tmp);*/
         view.setLayoutParams(layoutParams);
     }
 

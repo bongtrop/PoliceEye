@@ -47,7 +47,7 @@ public class FaceCompositeStyleAdapter extends RecyclerView.Adapter<FaceComposit
     public void onBindViewHolder(final FaceCompositeStyleViewHolder holder, final int position) {
 
         final int res = mDataset.get(position);
-        holder.txtNumber.setText(position+"");
+        holder.txtNumber.setText(position + "");
         if (activePos == position)
             holder.txtNumber.setBackgroundColor(act.getResources().getColor(R.color.background_txt_list_active));
         else

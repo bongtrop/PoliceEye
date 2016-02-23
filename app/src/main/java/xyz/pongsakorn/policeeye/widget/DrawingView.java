@@ -78,14 +78,14 @@ public class DrawingView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (now!=null)
-            canvas.drawBitmap(now,0,0,drawPaint);
+        if (now != null)
+            canvas.drawBitmap(now, 0, 0, drawPaint);
         else
             canvas.drawColor(bgColor);
 
         canvas.drawPath(drawPath, drawPaint);
 
-        for (Point p : erasePoint){
+        for (Point p : erasePoint) {
             canvas.drawCircle(p.x, p.y, 40, erasePaint);
         }
     }
@@ -95,7 +95,7 @@ public class DrawingView extends View {
         float touchX = event.getX();
         float touchY = event.getY();
 
-        if (tool==PENCIL) {
+        if (tool == PENCIL) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     drawPath.moveTo(touchX, touchY);
@@ -106,8 +106,7 @@ public class DrawingView extends View {
                 default:
                     return false;
             }
-        }
-        else if (tool==ERASER) {
+        } else if (tool == ERASER) {
             erasePoint.add(new Point(Math.round(touchX), Math.round(touchY)));
         }
 

@@ -44,7 +44,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                     .into(viewHolder.imSketch);
 
 
-            viewHolder.txtName.setText(paths[paths.length-1]);
+            viewHolder.txtName.setText(paths[paths.length - 1]);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return data == null?0:data.size();
+        return data == null ? 0 : data.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
