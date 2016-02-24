@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PoliceEye</string>
+    <string name="app_name">IdentiFace</string>
     <string name="action_new">New</string>
     <string name="action_open">Open</string>
     <string name="action_save">Save</string>
@@ -85,5 +85,6 @@
         <item>@mipmap/mouth493</item>
         <item>@mipmap/mouth505</item>
     </array>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
