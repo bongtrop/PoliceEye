@@ -1,44 +1,22 @@
 package xyz.pongsakorn.policeeye.activity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import xyz.pongsakorn.policeeye.R;
-import xyz.pongsakorn.policeeye.adapter.FaceCompositeAdapter;
-import xyz.pongsakorn.policeeye.adapter.FaceCompositeStyleAdapter;
-import xyz.pongsakorn.policeeye.handler.OkHttpHandler;
 import xyz.pongsakorn.policeeye.listener.OkHttpListener;
 import xyz.pongsakorn.policeeye.utils.OkHttpUtils;
 
@@ -136,52 +114,6 @@ public class SaveActivity extends AppCompatActivity {
                     Log.e("save", "fail");
                 }
             });
-
-
-            /*ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            sketchBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            //Base64.encodeToString(byteArray, Base64.DEFAULT)
-            OkHttpHandler handler = new OkHttpHandler(byteArray);
-            String result = null;
-            try {
-                handler.execute("http://192.168.0.4/receivefile.php").get();
-                Log.e("save", result);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }*/
-
-            /*ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image*//*"), byteArray);
-            //RequestBody requestBody = RequestBody.create(MediaType.parse("image*//*"), sketchBitmap);
-            //FileUploadService service = new FileUploadService();
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.0.4")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            FileUploadService service = retrofit.create(FileUploadService.class);
-
-            Call<JsonObject> call = service.uploadImage(requestBody);
-
-
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    Log.e("save", "res");
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e("save", "fail");
-                }
-            });*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -190,10 +122,4 @@ public class SaveActivity extends AppCompatActivity {
     public String createPhotoName() {
         return new SimpleDateFormat("yyyyMMdd-hhmmss'.jpg'").format(new Date());
     }
-
-    /*public interface FileUploadService {
-        @Multipart
-        @POST("receivefile.php")
-        Call<JsonObject> uploadImage(@Part("upload\"; filename=\"1\" ") RequestBody file);
-    }*/
 }
