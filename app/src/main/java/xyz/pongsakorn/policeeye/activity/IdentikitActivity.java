@@ -59,7 +59,7 @@ public class IdentikitActivity extends AppCompatActivity {
     private float scaleMouth;
     private ScaleGestureDetector SGD;
     private FacialComposite currentComposite;
-    private int faceCompItemOnCanvas = 0;
+    private int faceCompItemOnCanvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,7 @@ public class IdentikitActivity extends AppCompatActivity {
 
     private void initValue() {
         currentComposite = FacialComposite.HAIR;
+        faceCompItemOnCanvas = 0;
         scaleJaw = initScale;
         scaleHair = initScale;
         scaleEyebrows = initScale;
