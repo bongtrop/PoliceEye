@@ -70,9 +70,10 @@ public class SaveActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_done) {
-            Intent intent = new Intent(SaveActivity.this, SaveActivity.class);
+            Intent intent = new Intent(SaveActivity.this, ScanningActivity.class);
             intent.putExtra("SketchImage", sketchBitmap);
             startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

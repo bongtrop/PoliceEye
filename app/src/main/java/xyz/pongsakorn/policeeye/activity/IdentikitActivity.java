@@ -116,12 +116,10 @@ public class IdentikitActivity extends AppCompatActivity {
         faceCompStyleAdapter = new FaceCompositeStyleAdapter(this, FacialComposite.HAIR, new FaceCompositeStyleAdapter.AdapterListener() {
             @Override
             public void onSelect(int resId, int selectedStylePos, int oldStylePos) {
-                if (oldStylePos == 0) {
-                    if (selectedStylePos != 0)
-                        faceCompItemOnCanvas++;
-                } else {
-                    if (selectedStylePos == 0)
-                        faceCompItemOnCanvas--;
+                if (oldStylePos == 0 && selectedStylePos != 0) {
+                    faceCompItemOnCanvas++;
+                } else if (selectedStylePos == 0) {
+                    faceCompItemOnCanvas--;
                 }
 
                 switch (currentComposite) {

@@ -1,11 +1,15 @@
 package xyz.pongsakorn.policeeye.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -25,15 +29,17 @@ public class ScanningActivity extends AppCompatActivity {
     Bitmap sketchBitmap;
 
     ImageView ivSketch;
+    ImageView ivLaser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_save);
+        setContentView(R.layout.activity_scanning);
 
         sketchBitmap = getIntent().getParcelableExtra("SketchImage");
 
         ivSketch = (ImageView) findViewById(R.id.ivSketch);
+        ivLaser = (ImageView) findViewById(R.id.ivLaser);
         ivSketch.setImageBitmap(sketchBitmap);
 
         /*String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
@@ -62,12 +68,25 @@ public class ScanningActivity extends AppCompatActivity {
         OkHttpUtils.uploadImage("http://192.168.0.4/receivefile.php", byteArray, createPhotoName(), new OkHttpListener() {
             @Override
             public void onStart() {
-
+                TranslateAnimation mAnimation = new TranslateAnimation(
+                        TranslateAnimation.ABSOLUTE, 0f,
+                        TranslateAnimation.ABSOLUTE, 0f,
+                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                        TranslateAnimation.RELATIVE_TO_PARENT, 0.8f);
+                mAnimation.setDuration(3000);
+                mAnimation.setRepeatCount(-1);
+                mAnimation.setRepeatMode(Animation.REVERSE);
+                mAnimation.setInterpolator(new LinearInterpolator());
+                ivLaser.setAnimation(mAnimation);
             }
 
             @Override
             public void onSuccess(Object response) {
                 String responseBody = ((Response) response).toString();
+                Intent intent = new Intent(ScanningActivity.this, ResultActivity.class);
+                intent.putExtra("SketchImage", sketchBitmap);
+                startActivity(intent);
+                finish();
                 Log.e("save", responseBody);
             }
 
