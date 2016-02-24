@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">IdentiFace</string>
+    <string name="sketch_board">Sketch Board</string>
+    <string name="history">History</string>
     <string name="action_new">New</string>
     <string name="action_open">Open</string>
     <string name="action_save">Save</string>

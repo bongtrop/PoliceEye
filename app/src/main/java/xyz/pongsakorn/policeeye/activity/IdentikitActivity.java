@@ -460,10 +460,6 @@ public class IdentikitActivity extends AppCompatActivity {
                 startActivity(intent);
             } else
                 Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.action_history) {
-            Intent intent = new Intent(IdentikitActivity.this, HistoryActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.action_all_dataset) {
         }
 
         return super.onOptionsItemSelected(item);
