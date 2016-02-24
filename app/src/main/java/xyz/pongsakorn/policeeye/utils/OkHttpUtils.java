@@ -21,7 +21,7 @@ public class OkHttpUtils {
         listener.onStart();
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("upload", fileName, RequestBody.create(MediaType.parse("image/png"), byteImage))
+                .addFormDataPart("upload", fileName, RequestBody.create(MediaType.parse("image/jpg"), byteImage))
                 .build();
         Request request = new Request.Builder()
                 .url(url).post(requestBody)

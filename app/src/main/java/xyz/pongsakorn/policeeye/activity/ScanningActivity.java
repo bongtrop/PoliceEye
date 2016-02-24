@@ -63,7 +63,7 @@ public class ScanningActivity extends AppCompatActivity {
             }*/
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        sketchBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] byteArray = stream.toByteArray();
         OkHttpUtils.uploadImage("http://192.168.0.4/receivefile.php", byteArray, createPhotoName(), new OkHttpListener() {
             @Override
