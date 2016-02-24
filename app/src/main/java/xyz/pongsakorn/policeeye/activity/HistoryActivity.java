@@ -121,11 +121,11 @@ public class HistoryActivity extends AppCompatActivity {
                         DividerItemDecoration.VERTICAL_LIST,
                         R.drawable.devider_user_list));*/
 
-        fabSketch.setOnClickListener(new View.OnClickListener() {
+        /*fabSketch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(HistoryActivity.this, SketchActivity.class);
-                startActivityForResult(intent, 0);*/
+                *//*Intent intent = new Intent(HistoryActivity.this, SketchActivity.class);
+                startActivityForResult(intent, 0);*//*
 
                 Intent intent = new Intent(HistoryActivity.this, IdentikitActivity.class);
                 startActivityForResult(intent, 0);
@@ -133,7 +133,7 @@ public class HistoryActivity extends AppCompatActivity {
                 //openApp(HistoryActivity.this, "com.adsk.sketchbookhdexpress");
                 //openApp(HistoryActivity.this, "com.sonymobile.sketch");
             }
-        });
+        });*/
     }
 
     @Override
