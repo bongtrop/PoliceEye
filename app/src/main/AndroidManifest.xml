@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="xyz.pongsakorn.policeeye">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -22,7 +24,8 @@
         <activity
             android:name=".activity.SketchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.IdentikitActivity"></activity>
+        <activity android:name=".activity.IdentikitActivity" />
+        <activity android:name=".activity.SaveActivity" />
     </application>
 
 </manifest>

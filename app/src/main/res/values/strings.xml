@@ -3,6 +3,13 @@
     <string name="action_new">New</string>
     <string name="action_open">Open</string>
     <string name="action_save">Save</string>
+    <string name="action_done">Done</string>
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="height">Height</string>
+    <string name="unknown">Unknown</string>
+    <string name="around">Around</string>
 
     <array name="res_hair_styles">
         <item>@mipmap/hide</item>

@@ -2,6 +2,7 @@ package xyz.pongsakorn.policeeye.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
@@ -332,11 +333,11 @@ public class IdentikitActivity extends AppCompatActivity {
         if (view.getVisibility() == View.GONE)
             return;
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        int maxPadding = (int) (360 * getResources().getDisplayMetrics().density);
+        int maxPadding = (int) (100 * getResources().getDisplayMetrics().density);
         layoutParams.leftMargin = Math.max(0, Math.min((int) (layoutParams.leftMargin + dx), maxPadding));
         layoutParams.topMargin = Math.max(0, Math.min((int) (layoutParams.topMargin + dy), maxPadding));
-        /*float tmp = getResources().getDisplayMetrics().density;
-        Log.e("id kit act", layoutParams.leftMargin / tmp + "," + layoutParams.topMargin / tmp);*/
+        float tmp = getResources().getDisplayMetrics().density;
+        Log.e("id kit act", layoutParams.leftMargin / tmp + "," + layoutParams.topMargin / tmp);
         view.setLayoutParams(layoutParams);
     }
 
@@ -345,6 +346,71 @@ public class IdentikitActivity extends AppCompatActivity {
         layoutParams.leftMargin = leftMargin;
         layoutParams.topMargin = topMargin;
         view.setLayoutParams(layoutParams);
+    }
+
+    public static Bitmap TrimBitmap(Bitmap bmp) {
+        int imgHeight = bmp.getHeight();
+        int imgWidth  = bmp.getWidth();
+
+        //TRIM WIDTH - LEFT
+        int startWidth = 0;
+        for(int x = 0; x < imgWidth; x++) {
+            if (startWidth == 0) {
+                for (int y = 0; y < imgHeight; y++) {
+                    if (bmp.getPixel(x, y) != Color.WHITE) {
+                        startWidth = x;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+        //TRIM WIDTH - RIGHT
+        int endWidth  = 0;
+        for(int x = imgWidth - 1; x >= 0; x--) {
+            if (endWidth == 0) {
+                for (int y = 0; y < imgHeight; y++) {
+                    if (bmp.getPixel(x, y) != Color.WHITE) {
+                        endWidth = x;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+        //TRIM HEIGHT - TOP
+        int startHeight = 0;
+        for(int y = 0; y < imgHeight; y++) {
+            if (startHeight == 0) {
+                for (int x = 0; x < imgWidth; x++) {
+                    if (bmp.getPixel(x, y) != Color.WHITE) {
+                        startHeight = y;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+        //TRIM HEIGHT - BOTTOM
+        int endHeight = 0;
+        for(int y = imgHeight - 1; y >= 0; y--) {
+            if (endHeight == 0 ) {
+                for (int x = 0; x < imgWidth; x++) {
+                    if (bmp.getPixel(x, y) != Color.WHITE) {
+                        endHeight = y;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+        return Bitmap.createBitmap(
+                bmp,
+                startWidth,
+                startHeight,
+                endWidth - startWidth,
+                endHeight - startHeight
+        );
     }
 
     public enum FacialComposite {
@@ -365,37 +431,20 @@ public class IdentikitActivity extends AppCompatActivity {
             initValue();
         } else if (id == R.id.action_save) {
             layoutSketch.setDrawingCacheEnabled(true);
-            Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
+            //Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
+            Bitmap result = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
             layoutSketch.setDrawingCacheEnabled(false);
+            result = TrimBitmap(result);
 
             if (result == null)
                 Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
-
-            String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
-                    "/PoliceEye";
-            File dir = new File(file_path);
-            if (!dir.exists())
-                dir.mkdirs();
-
-            File file = new File(dir, createPhotoName());
-            FileOutputStream fOut = null;
-            try {
-                fOut = new FileOutputStream(file);
-                result.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-                fOut.flush();
-                fOut.close();
-                Toast.makeText(this, "Save Done", Toast.LENGTH_SHORT).show();
-                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-            } catch (IOException e) {
-                Toast.makeText(this, "Save Fail", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
+            else {
+                Intent intent = new Intent(IdentikitActivity.this, SaveActivity.class);
+                intent.putExtra("SketchImage", result);
+                startActivity(intent);
             }
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public String createPhotoName() {
-        return new SimpleDateFormat("yyyyMMdd-hhmmss'.jpg'").format(new Date());
     }
 }

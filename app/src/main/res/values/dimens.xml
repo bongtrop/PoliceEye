@@ -6,16 +6,16 @@
 
     <dimen name="list_face_composite_height">60dp</dimen>
 
-    <dimen name="margin_top_jaw">195dp</dimen>
-    <dimen name="margin_left_jaw">132dp</dimen>
-    <dimen name="margin_top_hair">61dp</dimen>
-    <dimen name="margin_left_hair">107dp</dimen>
-    <dimen name="margin_top_eyebrows">148dp</dimen>
-    <dimen name="margin_left_eyebrows">133dp</dimen>
-    <dimen name="margin_top_eyes">164dp</dimen>
-    <dimen name="margin_left_eyes">137dp</dimen>
-    <dimen name="margin_top_nose">170dp</dimen>
-    <dimen name="margin_left_nose">164dp</dimen>
-    <dimen name="margin_top_mouth">219dp</dimen>
-    <dimen name="margin_left_mouth">158dp</dimen>
+    <dimen name="margin_top_jaw">135dp</dimen>
+    <dimen name="margin_left_jaw">52dp</dimen>
+    <dimen name="margin_top_hair">1dp</dimen>
+    <dimen name="margin_left_hair">27dp</dimen>
+    <dimen name="margin_top_eyebrows">88dp</dimen>
+    <dimen name="margin_left_eyebrows">53dp</dimen>
+    <dimen name="margin_top_eyes">104dp</dimen>
+    <dimen name="margin_left_eyes">57dp</dimen>
+    <dimen name="margin_top_nose">110dp</dimen>
+    <dimen name="margin_left_nose">84dp</dimen>
+    <dimen name="margin_top_mouth">159dp</dimen>
+    <dimen name="margin_left_mouth">78dp</dimen>
 </resources>
