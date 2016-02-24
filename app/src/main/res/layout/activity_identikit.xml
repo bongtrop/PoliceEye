@@ -22,7 +22,7 @@
         android:id="@+id/layoutSketch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="80dp"
+        android:layout_margin="70dp"
         android:background="@android:color/white"
         android:layout_above="@id/recycViewFaceCompStyle">
 

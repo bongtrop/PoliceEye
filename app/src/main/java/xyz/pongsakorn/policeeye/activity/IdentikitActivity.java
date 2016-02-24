@@ -341,7 +341,7 @@ public class IdentikitActivity extends AppCompatActivity {
         if (view.getVisibility() == View.GONE)
             return;
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        int maxPadding = (int) (100 * getResources().getDisplayMetrics().density);
+        int maxPadding = (int) (200 * getResources().getDisplayMetrics().density);
         layoutParams.leftMargin = Math.max(0, Math.min((int) (layoutParams.leftMargin + dx), maxPadding));
         layoutParams.topMargin = Math.max(0, Math.min((int) (layoutParams.topMargin + dy), maxPadding));
         /*float tmp = getResources().getDisplayMetrics().density;
@@ -356,7 +356,7 @@ public class IdentikitActivity extends AppCompatActivity {
         view.setLayoutParams(layoutParams);
     }
 
-    public static Bitmap TrimBitmap(Bitmap bmp) {
+    public static Bitmap TrimBitmap(Bitmap bmp, int paddingPx) {
         int imgHeight = bmp.getHeight();
         int imgWidth = bmp.getWidth();
 
@@ -411,7 +411,18 @@ public class IdentikitActivity extends AppCompatActivity {
                 }
             } else break;
         }
-
+        startWidth -= paddingPx;
+        endWidth += paddingPx;
+        startHeight -= paddingPx;
+        endHeight += paddingPx;
+        if (startWidth < 0)
+            startWidth = 0;
+        if (startHeight < 0)
+            startHeight = 0;
+        if (endWidth > imgWidth)
+            endWidth = imgWidth;
+        if (endHeight > imgHeight)
+            endHeight = imgHeight;
         return Bitmap.createBitmap(
                 bmp,
                 startWidth,
@@ -443,7 +454,7 @@ public class IdentikitActivity extends AppCompatActivity {
                 //Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
                 Bitmap result = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
                 layoutSketch.setDrawingCacheEnabled(false);
-                result = TrimBitmap(result);
+                result = TrimBitmap(result, 15);
                 Intent intent = new Intent(IdentikitActivity.this, SaveActivity.class);
                 intent.putExtra("SketchImage", result);
                 startActivity(intent);
