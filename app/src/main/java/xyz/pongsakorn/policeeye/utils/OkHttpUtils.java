@@ -18,6 +18,7 @@ import xyz.pongsakorn.policeeye.listener.OkHttpListener;
 public class OkHttpUtils {
     public static void uploadImage(String url, byte[] byteImage, String fileName, final OkHttpListener listener){
         OkHttpClient client = new OkHttpClient();
+        listener.onStart();
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("upload", fileName, RequestBody.create(MediaType.parse("image/png"), byteImage))
