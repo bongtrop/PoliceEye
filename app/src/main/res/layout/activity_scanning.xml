@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context="xyz.pongsakorn.policeeye.activity.IdentikitActivity">
 
-    <ImageView
-        android:id="@+id/ivSketch"
-        android:layout_width="230dp"
-        android:layout_height="230dp"
-        android:layout_centerInParent="true"
-        android:padding="1dp"
-        android:background="@drawable/shape_history_photo"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/imagetest" />
-
-    <ImageView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/raser"/>
+        android:layout_gravity="center">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/ivSketch"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
+            android:layout_margin="15dp"
+            android:padding="1dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_history_photo"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/imagetest" />
+
+        <ImageView
+            android:id="@+id/ivLaser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/laser"/>
+
+    </FrameLayout>
+
+</FrameLayout>

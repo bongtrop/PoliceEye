@@ -56,7 +56,7 @@ public class FaceCompositeStyleAdapter extends RecyclerView.Adapter<FaceComposit
         holder.imStyle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onSelect(res, position);
+                mListener.onSelect(res, position, activePos);
                 int tmp = activePos;
                 activePos = position;
                 notifyItemChanged(tmp);
@@ -100,7 +100,7 @@ public class FaceCompositeStyleAdapter extends RecyclerView.Adapter<FaceComposit
     }
 
     public interface AdapterListener {
-        void onSelect(int resId, int activePos);
+        void onSelect(int resId, int activePos, int oldPos);
     }
 
     public static class FaceCompositeStyleViewHolder extends RecyclerView.ViewHolder {
