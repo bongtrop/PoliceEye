@@ -59,6 +59,7 @@ public class IdentikitActivity extends AppCompatActivity {
     private float scaleMouth;
     private ScaleGestureDetector SGD;
     private FacialComposite currentComposite;
+    private int faceCompItemOnCanvas = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,15 @@ public class IdentikitActivity extends AppCompatActivity {
         recycViewFaceComposite.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         faceCompStyleAdapter = new FaceCompositeStyleAdapter(this, FacialComposite.HAIR, new FaceCompositeStyleAdapter.AdapterListener() {
             @Override
-            public void onSelect(int resId, int selectedStylePos) {
+            public void onSelect(int resId, int selectedStylePos, int oldStylePos) {
+                if (oldStylePos == 0) {
+                    if (selectedStylePos != 0)
+                        faceCompItemOnCanvas++;
+                } else {
+                    if (selectedStylePos == 0)
+                        faceCompItemOnCanvas--;
+                }
+
                 switch (currentComposite) {
                     case JAW:
                         setImage(ivJaw, resId);
@@ -430,19 +439,17 @@ public class IdentikitActivity extends AppCompatActivity {
         if (id == R.id.action_new) {
             initValue();
         } else if (id == R.id.action_save) {
-            layoutSketch.setDrawingCacheEnabled(true);
-            //Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
-            Bitmap result = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
-            layoutSketch.setDrawingCacheEnabled(false);
-            result = TrimBitmap(result);
-
-            if (result == null)
-                Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
-            else {
+            if (faceCompItemOnCanvas != 0) {
+                layoutSketch.setDrawingCacheEnabled(true);
+                //Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
+                Bitmap result = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
+                layoutSketch.setDrawingCacheEnabled(false);
+                result = TrimBitmap(result);
                 Intent intent = new Intent(IdentikitActivity.this, SaveActivity.class);
                 intent.putExtra("SketchImage", result);
                 startActivity(intent);
-            }
+            } else
+                Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.action_history) {
             Intent intent = new Intent(IdentikitActivity.this, HistoryActivity.class);
             startActivity(intent);
