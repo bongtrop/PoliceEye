@@ -38,6 +38,7 @@ public class ResultActivity extends AppCompatActivity {
     TextView txtInputName;
     TextView txtGender;
     TextView txtNote;
+    TextView txtOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +59,27 @@ public class ResultActivity extends AppCompatActivity {
         txtInputName = (TextView) findViewById(R.id.txtInputName);
         txtGender = (TextView) findViewById(R.id.txtGender);
         txtNote = (TextView) findViewById(R.id.txtNote);
+        txtOrder = (TextView) findViewById(R.id.txtOrder);
 
         ivSketch.setImageBitmap(sketchBitmap);
 
-        ArrayList<String> urlArray = new ArrayList<>();
-        urlArray.add("https://cdn-images-1.medium.com/fit/c/60/60/1*XKuh9uNCPryD0UWOSvaPrw.jpeg");
-        urlArray.add("https://cdn-images-1.medium.com/fit/c/60/60/1*XKuh9uNCPryD0UWOSvaPrw.jpeg");
-        urlArray.add("https://cdn-images-1.medium.com/fit/c/60/60/1*XKuh9uNCPryD0UWOSvaPrw.jpeg");
-        pagerAdapter = new ResultPagerAdapter(ResultActivity.this, getSupportFragmentManager(), urlArray);
+        pagerAdapter = new ResultPagerAdapter(ResultActivity.this, getSupportFragmentManager(), people);
         pager.setAdapter(pagerAdapter);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            public void onPageSelected(int position) {
+                txtOrder.setText((position+1)+"");
+            }
+        });
+        /*int pagerPadding = 166;
+        pager.setPageMargin(20);
+        pager.setClipToPadding(false);
+        pager.setPadding(pagerPadding, 0, pagerPadding, 0);*/
         pagerIndicator.setViewPager(pager);
         pagerIndicator.setSnap(true);
     }
