@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -12,14 +11,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import okhttp3.Response;
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.listener.OkHttpListener;
-import xyz.pongsakorn.policeeye.utils.OkHttpUtils;
 
 public class SaveActivity extends AppCompatActivity {
 

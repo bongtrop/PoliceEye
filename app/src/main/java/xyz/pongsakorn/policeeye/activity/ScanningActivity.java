@@ -4,25 +4,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
-import okhttp3.Response;
 import xyz.pongsakorn.policeeye.R;
-import xyz.pongsakorn.policeeye.listener.OkHttpListener;
-import xyz.pongsakorn.policeeye.utils.OkHttpUtils;
+import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
 
 public class ScanningActivity extends AppCompatActivity {
 
@@ -31,10 +24,14 @@ public class ScanningActivity extends AppCompatActivity {
     ImageView ivSketch;
     ImageView ivLaser;
 
+    SketchMatchSDK sketchMatchSDK;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanning);
+
+        sketchMatchSDK = new SketchMatchSDK("http://pongsakorn.xyz:8080");
 
         sketchBitmap = getIntent().getParcelableExtra("SketchImage");
 
@@ -63,41 +60,32 @@ public class ScanningActivity extends AppCompatActivity {
             }*/
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        sketchBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
         byte[] byteArray = stream.toByteArray();
-        OkHttpUtils.uploadImage("http://192.168.0.4/receivefile.php", byteArray, createPhotoName(), new OkHttpListener() {
-            @Override
-            public void onStart() {
-                TranslateAnimation mAnimation = new TranslateAnimation(
-                        TranslateAnimation.ABSOLUTE, 0f,
-                        TranslateAnimation.ABSOLUTE, 0f,
-                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
-                        TranslateAnimation.RELATIVE_TO_PARENT, 0.8f);
-                mAnimation.setDuration(3000);
-                mAnimation.setRepeatCount(-1);
-                mAnimation.setRepeatMode(Animation.REVERSE);
-                mAnimation.setInterpolator(new LinearInterpolator());
-                ivLaser.setAnimation(mAnimation);
-            }
 
+        TranslateAnimation mAnimation = new TranslateAnimation(
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0.8f);
+        mAnimation.setDuration(3000);
+        mAnimation.setRepeatCount(-1);
+        mAnimation.setRepeatMode(Animation.REVERSE);
+        mAnimation.setInterpolator(new LinearInterpolator());
+        ivLaser.setAnimation(mAnimation);
+
+        sketchMatchSDK.retrieval(byteArray, createPhotoName(), new SketchMatchSDK.Listener() {
             @Override
-            public void onSuccess(Object response) {
-                String responseBody = ((Response) response).toString();
+            public void onSuccess(ArrayList<SketchMatchSDK.Person> people) {
                 Intent intent = new Intent(ScanningActivity.this, ResultActivity.class);
                 intent.putExtra("SketchImage", sketchBitmap);
                 startActivity(intent);
                 finish();
-                Log.e("save", responseBody);
             }
 
             @Override
-            public void onInternetDown() {
+            public void onFail(String error) {
 
-            }
-
-            @Override
-            public void onFailed(int statusCode, String error) {
-                Log.e("save", "fail");
             }
         });
     }
