@@ -18,12 +18,11 @@ import android.widget.RadioGroup;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
-import okhttp3.Response;
 import xyz.pongsakorn.policeeye.R;
-import xyz.pongsakorn.policeeye.listener.OkHttpListener;
-import xyz.pongsakorn.policeeye.utils.OkHttpUtils;
+import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
 
 public class ScanningActivity extends AppCompatActivity {
 
@@ -35,6 +34,8 @@ public class ScanningActivity extends AppCompatActivity {
     ImageView ivSketch;
     ImageView ivLaser;
 
+    SketchMatchSDK sketchMatchSDK;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,8 @@ public class ScanningActivity extends AppCompatActivity {
         inputName = intent.getStringExtra("inputName");
         gender = intent.getStringExtra("gender");
         note = intent.getStringExtra("note");
-
+        sketchMatchSDK = new SketchMatchSDK("http://pongsakorn.xyz:8080");
+        
         ivSketch = (ImageView) findViewById(R.id.ivSketch);
         ivLaser = (ImageView) findViewById(R.id.ivLaser);
         ivSketch.setImageBitmap(sketchBitmap);
@@ -71,49 +73,36 @@ public class ScanningActivity extends AppCompatActivity {
             }*/
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+
         byte[] byteArray = stream.toByteArray();
-        OkHttpUtils.uploadImage("http://192.168.0.4/receivefile.php", byteArray, createPhotoName(), new OkHttpListener() {
+
+        TranslateAnimation mAnimation = new TranslateAnimation(
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0.8f);
+        mAnimation.setDuration(3000);
+        mAnimation.setRepeatCount(-1);
+        mAnimation.setRepeatMode(Animation.REVERSE);
+        mAnimation.setInterpolator(new LinearInterpolator());
+        ivLaser.setAnimation(mAnimation);
+
+        sketchMatchSDK.retrieval(byteArray, createPhotoName(), new SketchMatchSDK.Listener() {
             @Override
-            public void onStart() {
-                TranslateAnimation mAnimation = new TranslateAnimation(
-                        TranslateAnimation.ABSOLUTE, 0f,
-                        TranslateAnimation.ABSOLUTE, 0f,
-                        TranslateAnimation.RELATIVE_TO_PARENT, 0f,
-                        TranslateAnimation.RELATIVE_TO_PARENT, 0.8f);
-                mAnimation.setDuration(3000);
-                mAnimation.setRepeatCount(-1);
-                mAnimation.setRepeatMode(Animation.REVERSE);
-                mAnimation.setInterpolator(new LinearInterpolator());
-                ivLaser.setAnimation(mAnimation);
+            public void onSuccess(ArrayList<SketchMatchSDK.Person> people) {
+                Intent intent = new Intent(ScanningActivity.this, ResultActivity.class);
+                intent.putExtra("SketchImage", sketchBitmap);
+                intent.putExtra("gender", gender);
+                intent.putExtra("note", note);
+                intent.putExtra("inputName", inputName);
+                startActivity(intent);
+                finish();
             }
 
             @Override
-            public void onSuccess(Object response) {
-                String responseBody = null;
-                try {
-                    responseBody = ((Response) response).body().string();
-                    Intent intent = new Intent(ScanningActivity.this, ResultActivity.class);
-                    intent.putExtra("SketchImage", sketchBitmap);
-                    intent.putExtra("gender", gender);
-                    intent.putExtra("note", note);
-                    intent.putExtra("inputName", inputName);
-                    startActivity(intent);
-                    finish();
-                    Log.e("save", responseBody);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            public void onFail(String error) {
 
-            @Override
-            public void onInternetDown() {
-
-            }
-
-            @Override
-            public void onFailed(int statusCode, String error) {
-                Log.e("save", "fail");
             }
         });
     }
