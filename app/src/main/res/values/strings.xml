@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">IdentiFace</string>
+    <string name="sketch_board">Sketch Board</string>
+    <string name="history">History</string>
+    <string name="detail">Detail</string>
+    <string name="scanning">Scanning</string>
+    <string name="result">Result</string>
     <string name="action_new">New</string>
     <string name="action_open">Open</string>
     <string name="action_save">Save</string>
@@ -85,6 +90,5 @@
         <item>@mipmap/mouth493</item>
         <item>@mipmap/mouth505</item>
     </array>
-    <string name="title_activity_main">MainActivity</string>
 
 </resources>

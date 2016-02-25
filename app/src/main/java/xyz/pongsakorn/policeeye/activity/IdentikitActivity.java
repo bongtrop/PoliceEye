@@ -4,29 +4,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.adapter.FaceCompositeAdapter;
@@ -341,7 +331,7 @@ public class IdentikitActivity extends AppCompatActivity {
         if (view.getVisibility() == View.GONE)
             return;
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        int maxPadding = (int) (100 * getResources().getDisplayMetrics().density);
+        int maxPadding = (int) (200 * getResources().getDisplayMetrics().density);
         layoutParams.leftMargin = Math.max(0, Math.min((int) (layoutParams.leftMargin + dx), maxPadding));
         layoutParams.topMargin = Math.max(0, Math.min((int) (layoutParams.topMargin + dy), maxPadding));
         /*float tmp = getResources().getDisplayMetrics().density;
@@ -356,7 +346,7 @@ public class IdentikitActivity extends AppCompatActivity {
         view.setLayoutParams(layoutParams);
     }
 
-    public static Bitmap TrimBitmap(Bitmap bmp) {
+    public static Bitmap TrimBitmap(Bitmap bmp, int paddingPx) {
         int imgHeight = bmp.getHeight();
         int imgWidth = bmp.getWidth();
 
@@ -411,7 +401,18 @@ public class IdentikitActivity extends AppCompatActivity {
                 }
             } else break;
         }
-
+        startWidth -= paddingPx;
+        endWidth += paddingPx;
+        startHeight -= paddingPx;
+        endHeight += paddingPx;
+        if (startWidth < 0)
+            startWidth = 0;
+        if (startHeight < 0)
+            startHeight = 0;
+        if (endWidth > imgWidth)
+            endWidth = imgWidth;
+        if (endHeight > imgHeight)
+            endHeight = imgHeight;
         return Bitmap.createBitmap(
                 bmp,
                 startWidth,
@@ -443,16 +444,12 @@ public class IdentikitActivity extends AppCompatActivity {
                 //Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
                 Bitmap result = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
                 layoutSketch.setDrawingCacheEnabled(false);
-                result = TrimBitmap(result);
-                Intent intent = new Intent(IdentikitActivity.this, SaveActivity.class);
+                result = TrimBitmap(result, 15);
+                Intent intent = new Intent(IdentikitActivity.this, DetailActivity.class);
                 intent.putExtra("SketchImage", result);
                 startActivity(intent);
             } else
                 Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.action_history) {
-            Intent intent = new Intent(IdentikitActivity.this, HistoryActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.action_all_dataset) {
         }
 
         return super.onOptionsItemSelected(item);

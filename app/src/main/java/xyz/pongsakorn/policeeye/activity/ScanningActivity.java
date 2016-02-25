@@ -61,6 +61,7 @@ public class ScanningActivity extends AppCompatActivity {
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+
         byte[] byteArray = stream.toByteArray();
 
         TranslateAnimation mAnimation = new TranslateAnimation(
