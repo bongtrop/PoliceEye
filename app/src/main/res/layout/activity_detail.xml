@@ -36,7 +36,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editName"
+                android:id="@+id/editInputName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true" />

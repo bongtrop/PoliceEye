@@ -17,7 +17,7 @@ public class DetailActivity extends AppCompatActivity {
 
     Bitmap sketchBitmap;
 
-    EditText editName;
+    EditText editInputName;
     RadioGroup radGroupGender;
     RadioButton radMale;
     RadioButton radFemale;
@@ -36,10 +36,8 @@ public class DetailActivity extends AppCompatActivity {
 
         sketchBitmap = getIntent().getParcelableExtra("SketchImage");
 
-        editName = (EditText) findViewById(R.id.editName);
+        editInputName = (EditText) findViewById(R.id.editInputName);
         radGroupGender = (RadioGroup) findViewById(R.id.radGroupGender);
-        radMale = (RadioButton) findViewById(R.id.radMale);
-        radFemale = (RadioButton) findViewById(R.id.radFemale);
         radGroupHeight = (RadioGroup) findViewById(R.id.radGroupHeight);
         radUnknown = (RadioButton) findViewById(R.id.radUnknown);
         radAround = (RadioButton) findViewById(R.id.radAround);
@@ -64,6 +62,12 @@ public class DetailActivity extends AppCompatActivity {
         if (id == R.id.action_done) {
             Intent intent = new Intent(DetailActivity.this, ScanningActivity.class);
             intent.putExtra("SketchImage", sketchBitmap);
+            if (radGroupGender.getCheckedRadioButtonId() == R.id.radMale)
+                intent.putExtra("gender", "male");
+            else
+                intent.putExtra("gender", "female");
+            intent.putExtra("note", editNote.getText().toString());
+            intent.putExtra("inputName", editInputName.getText().toString());
             startActivity(intent);
             finish();
         }

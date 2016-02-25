@@ -7,4 +7,5 @@
 
     <color name="background_txt_list_active">#999</color>
     <color name="background_txt_list_inactive">#444</color>
+    <color name="background_result_tab">#ece</color>
 </resources>

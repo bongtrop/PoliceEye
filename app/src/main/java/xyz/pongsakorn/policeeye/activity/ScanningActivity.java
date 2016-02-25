@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,6 +28,9 @@ import xyz.pongsakorn.policeeye.utils.OkHttpUtils;
 public class ScanningActivity extends AppCompatActivity {
 
     Bitmap sketchBitmap;
+    String inputName;
+    String gender;
+    String note;
 
     ImageView ivSketch;
     ImageView ivLaser;
@@ -36,7 +40,11 @@ public class ScanningActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanning);
 
-        sketchBitmap = getIntent().getParcelableExtra("SketchImage");
+        Intent intent = getIntent();
+        sketchBitmap = intent.getParcelableExtra("SketchImage");
+        inputName = intent.getStringExtra("inputName");
+        gender = intent.getStringExtra("gender");
+        note = intent.getStringExtra("note");
 
         ivSketch = (ImageView) findViewById(R.id.ivSketch);
         ivLaser = (ImageView) findViewById(R.id.ivLaser);
@@ -82,12 +90,20 @@ public class ScanningActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(Object response) {
-                String responseBody = ((Response) response).toString();
-                Intent intent = new Intent(ScanningActivity.this, ResultActivity.class);
-                intent.putExtra("SketchImage", sketchBitmap);
-                startActivity(intent);
-                finish();
-                Log.e("save", responseBody);
+                String responseBody = null;
+                try {
+                    responseBody = ((Response) response).body().string();
+                    Intent intent = new Intent(ScanningActivity.this, ResultActivity.class);
+                    intent.putExtra("SketchImage", sketchBitmap);
+                    intent.putExtra("gender", gender);
+                    intent.putExtra("note", note);
+                    intent.putExtra("inputName", inputName);
+                    startActivity(intent);
+                    finish();
+                    Log.e("save", responseBody);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
