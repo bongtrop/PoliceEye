@@ -30,15 +30,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:text="Input name"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/editInputName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="13sp"
                 android:singleLine="true" />
 
             <RadioGroup
@@ -46,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checkedButton="@+id/radMale"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -142,16 +144,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:text="Note"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/editNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minLines="3"
+                android:textSize="13sp"
                 android:maxLines="3" />
 
             <TextView

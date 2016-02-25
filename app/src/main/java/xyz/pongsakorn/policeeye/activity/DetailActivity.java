@@ -29,8 +29,6 @@ public class DetailActivity extends AppCompatActivity {
 
     EditText editInputName;
     RadioGroup radGroupGender;
-    RadioButton radMale;
-    RadioButton radFemale;
     RadioGroup radGroupHeight;
     RadioButton radUnknown;
     RadioButton radAround;
@@ -91,8 +89,6 @@ public class DetailActivity extends AppCompatActivity {
             sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
 
             byte[] byteArray = stream.toByteArray();
-
-
 
             if (radGroupGender.getCheckedRadioButtonId() == R.id.radMale)
                 gender = "male";
