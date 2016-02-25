@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,7 +33,11 @@ public class SketchMatchSDK {
 
     public SketchMatchSDK(String url) {
         this.url = url;
-        client = new OkHttpClient();
+        client = new OkHttpClient.Builder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
     }
 
     public void retrieval(byte[] image, String sex, final Listener listener) {
