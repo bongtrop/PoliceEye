@@ -13,12 +13,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.adapter.ResultPagerAdapter;
+import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -45,6 +49,8 @@ public class ResultActivity extends AppCompatActivity {
         inputName = intent.getStringExtra("inputName");
         gender = intent.getStringExtra("gender");
         note = intent.getStringExtra("note");
+        Type type = new TypeToken<ArrayList<SketchMatchSDK.Person>>() {}.getType();
+        final ArrayList<SketchMatchSDK.Person> people = new Gson().fromJson(getIntent().getStringExtra("people"), type);
 
         pager = (ViewPager) findViewById(R.id.pager);
         pagerIndicator = (CirclePageIndicator)findViewById(R.id.pagerIndicator);

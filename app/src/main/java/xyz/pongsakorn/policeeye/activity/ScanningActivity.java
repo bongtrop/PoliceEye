@@ -13,6 +13,10 @@ import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.lang.reflect.Type;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
@@ -40,7 +44,7 @@ public class ScanningActivity extends AppCompatActivity {
         gender = intent.getStringExtra("gender");
         note = intent.getStringExtra("note");
         sketchMatchSDK = new SketchMatchSDK("http://pongsakorn.xyz:8080");
-        
+
         ivSketch = (ImageView) findViewById(R.id.ivSketch);
         ivLaser = (ImageView) findViewById(R.id.ivLaser);
         ivSketch.setImageBitmap(sketchBitmap);
@@ -81,7 +85,7 @@ public class ScanningActivity extends AppCompatActivity {
         mAnimation.setInterpolator(new LinearInterpolator());
         ivLaser.setAnimation(mAnimation);
 
-        sketchMatchSDK.retrieval(byteArray, createPhotoName(), new SketchMatchSDK.Listener() {
+        sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", new SketchMatchSDK.Listener() {
             @Override
             public void onSuccess(ArrayList<SketchMatchSDK.Person> people) {
                 Intent intent = new Intent(ScanningActivity.this, ResultActivity.class);
@@ -89,13 +93,14 @@ public class ScanningActivity extends AppCompatActivity {
                 intent.putExtra("gender", gender);
                 intent.putExtra("note", note);
                 intent.putExtra("inputName", inputName);
+                intent.putExtra("people", new Gson().toJson(people));
                 startActivity(intent);
                 finish();
             }
 
             @Override
             public void onFail(String error) {
-
+                Log.e("scan", error);
             }
         });
     }

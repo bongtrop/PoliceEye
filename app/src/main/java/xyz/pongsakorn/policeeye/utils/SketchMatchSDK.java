@@ -60,7 +60,7 @@ public class SketchMatchSDK {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String res = response.toString();
+                String res = response.body().string();
                 try {
                     JSONObject jsonres = new JSONObject(res);
                     if (jsonres.getString("status").equals("success")) {
@@ -90,7 +90,7 @@ public class SketchMatchSDK {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String res = response.toString();
+                String res = response.body().string();
                 try {
                     JSONObject jsonres = new JSONObject(res);
                     if (jsonres.getString("status").equals("success")) {
