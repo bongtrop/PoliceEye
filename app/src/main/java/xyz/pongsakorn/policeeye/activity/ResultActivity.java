@@ -3,20 +3,20 @@ package xyz.pongsakorn.policeeye.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -26,8 +26,11 @@ import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
 
 public class ResultActivity extends AppCompatActivity {
 
+    private final String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/PoliceEye/";
+
     Bitmap sketchBitmap;
-    String inputName;
+    String fileName;
+    String name;
     String gender;
     String note;
     ViewPager pager;
@@ -35,7 +38,7 @@ public class ResultActivity extends AppCompatActivity {
     ResultPagerAdapter pagerAdapter;
 
     ImageView ivSketch;
-    TextView txtInputName;
+    TextView txtName;
     TextView txtGender;
     TextView txtNote;
     TextView txtOrder;
@@ -46,8 +49,9 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         Intent intent = getIntent();
-        sketchBitmap = intent.getParcelableExtra("SketchImage");
-        inputName = intent.getStringExtra("inputName");
+        //sketchBitmap = intent.getParcelableExtra("SketchImage");
+        fileName = intent.getStringExtra("fileName");
+        name = intent.getStringExtra("name");
         gender = intent.getStringExtra("gender");
         note = intent.getStringExtra("note");
         Type type = new TypeToken<ArrayList<SketchMatchSDK.Person>>() {}.getType();
@@ -56,12 +60,18 @@ public class ResultActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         pagerIndicator = (CirclePageIndicator)findViewById(R.id.pagerIndicator);
         ivSketch = (ImageView) findViewById(R.id.ivSketch);
-        txtInputName = (TextView) findViewById(R.id.txtInputName);
+        txtName = (TextView) findViewById(R.id.txtName);
         txtGender = (TextView) findViewById(R.id.txtGender);
         txtNote = (TextView) findViewById(R.id.txtNote);
         txtOrder = (TextView) findViewById(R.id.txtOrder);
 
-        ivSketch.setImageBitmap(sketchBitmap);
+        Glide.with(ResultActivity.this)
+                .load(new File(file_path + fileName))
+                .into(ivSketch);
+        //ivSketch.setImageBitmap(sketchBitmap);
+        txtName.setText(name);
+        txtGender.setText(gender);
+        txtNote.setText(note);
 
         pagerAdapter = new ResultPagerAdapter(ResultActivity.this, getSupportFragmentManager(), people);
         pager.setAdapter(pagerAdapter);

@@ -50,7 +50,7 @@
                         android:layout_marginLeft="3dp"
                         android:singleLine="true"
                         android:textStyle="bold"
-                        android:text="Input name"/>
+                        android:text="Name"/>
 
                     <TextView
                         android:id="@+id/txtName"
@@ -59,6 +59,51 @@
                         android:layout_marginLeft="5dp"
                         android:singleLine="true"
                         android:text="image1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:singleLine="true"
+                        android:textStyle="bold"
+                        android:text="Gender"/>
+
+                    <TextView
+                        android:id="@+id/txtGender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:text="male"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:singleLine="true"
+                        android:textStyle="bold"
+                        android:text="Note"/>
+
+                    <TextView
+                        android:id="@+id/txtNote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="male"/>
 
                 </LinearLayout>
 

@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +23,8 @@ import java.util.ArrayList;
 
 import xyz.pongsakorn.policeeye.adapter.HistoryAdapter;
 import xyz.pongsakorn.policeeye.R;
+import xyz.pongsakorn.policeeye.model.HistoryModel;
+import xyz.pongsakorn.policeeye.utils.DatabaseHandler;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -40,7 +41,7 @@ public class HistoryActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     HistoryAdapter recycViewAdapter;
     //DefaultRecycViewOnScrollListener scrollListener;
-    ArrayList<JSONObject> dd;
+    ArrayList<HistoryModel> historyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,29 +53,14 @@ public class HistoryActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
 
-        dd = new ArrayList<>();
-
-
-        File dir = new File(file_path);
-        if (dir.exists()) {
-            File[] files = dir.listFiles();
-            if (files != null) {
-                for (int i = files.length - 1; i >= 0; i--) {
-                    try {
-                        JSONObject tmp = new JSONObject();
-                        tmp.put("path", files[i].getAbsolutePath());
-                        dd.add(tmp);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            if (recycViewAdapter == null) {
-                recycViewAdapter = new HistoryAdapter(this, dd);
-                //notificationFetch.getInitNoti(GET_INIT_AMOUNT, new InitNotificationListener(act, recycViewAdapter, scrollListener));
-            }
-            recyclerView.setAdapter(recycViewAdapter);
+        DatabaseHandler db = new DatabaseHandler(HistoryActivity.this);
+        historyList = db.getAllHistory();
+        if (recycViewAdapter == null) {
+            recycViewAdapter = new HistoryAdapter(HistoryActivity.this, historyList);
+            //notificationFetch.getInitNoti(GET_INIT_AMOUNT, new InitNotificationListener(act, recycViewAdapter, scrollListener));
         }
+        recyclerView.setAdapter(recycViewAdapter);
+
 
         /*swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -142,23 +128,12 @@ public class HistoryActivity extends AppCompatActivity {
 
         Log.e("his", "req " + requestCode + ", res " + resultCode);
         if (requestCode == 0) {
-            File dir = new File(file_path);
-            if (dir.exists()) {
-                dd.clear();
-                File[] files = dir.listFiles();
-                if (files != null) {
-                    for (int i = files.length - 1; i >= 0; i--) {
-                        try {
-                            JSONObject tmp = new JSONObject();
-                            tmp.put("path", files[i].getAbsolutePath());
-                            dd.add(tmp);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                recycViewAdapter.notifyDataSetChanged();
+            DatabaseHandler db = new DatabaseHandler(HistoryActivity.this);
+            historyList = db.getAllHistory();
+            if (recycViewAdapter == null) {
+                recycViewAdapter = new HistoryAdapter(HistoryActivity.this, historyList);
             }
+            recyclerView.setAdapter(recycViewAdapter);
         }
     }
 
