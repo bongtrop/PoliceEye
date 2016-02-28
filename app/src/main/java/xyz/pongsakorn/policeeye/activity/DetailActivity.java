@@ -84,72 +84,74 @@ public class DetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_done) {
-            final Dialog dialog = new Dialog(this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.dialog_loading);
-
-            dialog.show();
-
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
-
-            byte[] byteArray = stream.toByteArray();
-
-            if (radGroupGender.getCheckedRadioButtonId() == R.id.radMale)
-                gender = "Male";
-            else
-                gender = "Female";
-
             note = editNote.getText().toString();
             name = editName.getText().toString();
+            if (!name.equals("")) {
+                final Dialog dialog = new Dialog(this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(false);
+                dialog.setContentView(R.layout.dialog_loading);
 
-            sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", new SketchMatchSDK.Listener() {
-                @Override
-                public void onSuccess(ArrayList<SketchMatchSDK.Person> people) {
-                    dialog.dismiss();
+                dialog.show();
 
-                    String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
-                            "/PoliceEye";
-                    File dir = new File(file_path);
-                    if (!dir.exists())
-                        dir.mkdirs();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
 
-                    String fileName = createPhotoName();
-                    File file = new File(dir, fileName);
-                    FileOutputStream fOut = null;
-                    try {
-                        fOut = new FileOutputStream(file);
-                        sketchBitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-                        fOut.flush();
-                        fOut.close();
-                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+                byte[] byteArray = stream.toByteArray();
 
-                        String jsonPeople = new Gson().toJson(people);
-                        if (note.equals(""))
-                            note = "-";
-                        saveHistoryToDB(fileName, name, gender, note, jsonPeople);
+                if (radGroupGender.getCheckedRadioButtonId() == R.id.radMale)
+                    gender = "Male";
+                else
+                    gender = "Female";
 
-                        Intent intent = new Intent(DetailActivity.this, ResultActivity.class);
-                        //intent.putExtra("SketchImage", sketchBitmap);
-                        intent.putExtra("fileName", fileName);
-                        intent.putExtra("gender", gender);
-                        intent.putExtra("note", note);
-                        intent.putExtra("name", name);
-                        intent.putExtra("people", jsonPeople);
-                        startActivity(intent);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", new SketchMatchSDK.Listener() {
+                    @Override
+                    public void onSuccess(ArrayList<SketchMatchSDK.Person> people) {
+                        dialog.dismiss();
+
+                        String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
+                                "/PoliceEye";
+                        File dir = new File(file_path);
+                        if (!dir.exists())
+                            dir.mkdirs();
+
+                        String fileName = createPhotoName();
+                        File file = new File(dir, fileName);
+                        FileOutputStream fOut = null;
+                        try {
+                            fOut = new FileOutputStream(file);
+                            sketchBitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                            fOut.flush();
+                            fOut.close();
+                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+
+                            String jsonPeople = new Gson().toJson(people);
+                            if (note.equals(""))
+                                note = "-";
+                            saveHistoryToDB(fileName, name, gender, note, jsonPeople);
+
+                            Intent intent = new Intent(DetailActivity.this, ResultActivity.class);
+                            //intent.putExtra("SketchImage", sketchBitmap);
+                            intent.putExtra("fileName", fileName);
+                            intent.putExtra("gender", gender);
+                            intent.putExtra("note", note);
+                            intent.putExtra("name", name);
+                            intent.putExtra("people", jsonPeople);
+                            startActivity(intent);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        finish();
                     }
-                    finish();
-                }
 
-                @Override
-                public void onFail(String error) {
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
-            });
+                    @Override
+                    public void onFail(String error) {
+                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+            } else
+                Toast.makeText(getApplicationContext(), "Please enter name.", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
