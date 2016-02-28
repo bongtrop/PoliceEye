@@ -6,6 +6,7 @@
     <item
         android:id="@+id/action_delete"
         android:orderInCategory="100"
+        android:icon="@mipmap/icon_delete_white"
         android:title="@string/action_delete"
         app:showAsAction="always" />
 </menu>

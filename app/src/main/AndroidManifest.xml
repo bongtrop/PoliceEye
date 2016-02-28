@@ -26,22 +26,27 @@
 
         <activity
             android:name=".activity.HistoryActivity"
+            android:screenOrientation="portrait"
             android:label="@string/history" />
 
         <activity
             android:name=".activity.SketchActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".activity.IdentikitActivity"
+            android:screenOrientation="portrait"
             android:label="@string/sketch_board" />
 
         <activity
             android:name=".activity.DetailActivity"
+            android:screenOrientation="portrait"
             android:label="@string/detail" />
 
         <activity
             android:name=".activity.ResultActivity"
+            android:screenOrientation="portrait"
             android:label="@string/result" />
     </application>
 

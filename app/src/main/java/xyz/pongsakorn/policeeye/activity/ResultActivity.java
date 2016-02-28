@@ -1,5 +1,6 @@
 package xyz.pongsakorn.policeeye.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -7,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,7 +40,7 @@ public class ResultActivity extends AppCompatActivity {
     ImageView ivSketch;
     TextView txtName;
     TextView txtGender;
-    TextView txtNote;
+    TextView btnViewNote;
     TextView txtOrder;
 
     @Override
@@ -58,7 +61,7 @@ public class ResultActivity extends AppCompatActivity {
         ivSketch = (ImageView) findViewById(R.id.ivSketch);
         txtName = (TextView) findViewById(R.id.txtName);
         txtGender = (TextView) findViewById(R.id.txtGender);
-        txtNote = (TextView) findViewById(R.id.txtNote);
+        btnViewNote = (TextView) findViewById(R.id.btnViewNote);
         txtOrder = (TextView) findViewById(R.id.txtOrder);
 
         Glide.with(ResultActivity.this)
@@ -66,8 +69,7 @@ public class ResultActivity extends AppCompatActivity {
                 .into(ivSketch);
         //ivSketch.setImageBitmap(sketchBitmap);
         txtName.setText(name);
-        txtGender.setText(gender);
-        txtNote.setText(note);
+        txtGender.setText(gender.equals("M")?"Male":"Female");
 
         pagerAdapter = new ResultPagerAdapter(ResultActivity.this, getSupportFragmentManager(), people);
         pager.setAdapter(pagerAdapter);
@@ -79,9 +81,32 @@ public class ResultActivity extends AppCompatActivity {
             }
 
             public void onPageSelected(int position) {
-                txtOrder.setText((position+1)+"");
+                txtOrder.setText((position + 1) + "/" + pagerAdapter.getCount());
             }
         });
+        txtOrder.setText("1/" + pagerAdapter.getCount());
+
+        if (note.length()>50) {
+            btnViewNote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Dialog dialog = new Dialog(ResultActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.dialog_note);
+                    final TextView txtNote = (TextView) dialog.findViewById(R.id.txtNote);
+
+                    txtNote.setText(note);
+                    dialog.show();
+                }
+            });
+        } else {
+            btnViewNote.setText(note);
+            btnViewNote.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
+
+
+
+
     }
 
     @Override
