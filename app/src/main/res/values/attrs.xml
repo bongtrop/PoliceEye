@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="ratio" format="float" />
+
     <declare-styleable name="DrawingView">
         <attr name="drawColor" format="color" />
         <attr name="backgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" />
     </declare-styleable>
 
 </resources>

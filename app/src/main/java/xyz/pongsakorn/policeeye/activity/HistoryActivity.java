@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +22,7 @@ import xyz.pongsakorn.policeeye.adapter.HistoryAdapter;
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.model.HistoryModel;
 import xyz.pongsakorn.policeeye.utils.DatabaseHandler;
+import xyz.pongsakorn.policeeye.widget.GridSpacingItemDecoration;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -35,7 +37,7 @@ public class HistoryActivity extends AppCompatActivity {
     SwipeRefreshLayout swipe_refresh_layout;
     RecyclerView recyclerView;
     FloatingActionButton fabSketch;
-    LinearLayoutManager layoutManager;
+    GridLayoutManager layoutManager;
     HistoryAdapter recycViewAdapter;
     //DefaultRecycViewOnScrollListener scrollListener;
     ArrayList<HistoryModel> historyList;
@@ -96,8 +98,9 @@ public class HistoryActivity extends AppCompatActivity {
         swipe_refresh_layout.buildLayer();
         //swipe_refresh_layout.setColorSchemeResources(R.color.swipeRefreshIcon);
         swipe_refresh_layout.setEnabled(false);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(8));
         /*recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(this,
