@@ -30,8 +30,7 @@
         <FrameLayout
             android:id="@+id/frame_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            > <!--android:paddingTop="?attr/actionBarSize"-->
+            android:layout_height="match_parent"> <!--android:paddingTop="?attr/actionBarSize"-->
 
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipe_refresh_layout"
@@ -42,7 +41,7 @@
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#dcdcdc"
+                    android:background="@android:color/white"
                     android:footerDividersEnabled="false"/>
 
             </android.support.v4.widget.SwipeRefreshLayout>
