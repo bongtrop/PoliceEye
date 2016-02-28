@@ -439,7 +439,7 @@ public class IdentikitActivity extends AppCompatActivity {
         if (id == R.id.action_new) {
             initValue();
         } else if (id == R.id.action_save) {
-            if (faceCompItemOnCanvas != 0) {
+            if (faceCompItemOnCanvas == faceCompositeAdapter.getItemCount()) {
                 layoutSketch.setDrawingCacheEnabled(true);
                 //Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
                 Bitmap result = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
@@ -449,7 +449,7 @@ public class IdentikitActivity extends AppCompatActivity {
                 intent.putExtra("SketchImage", result);
                 startActivity(intent);
             } else
-                Toast.makeText(this, "Draw it first", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Some face composite are empty.", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
