@@ -31,7 +31,6 @@ public class ResultActivity extends AppCompatActivity {
     String gender;
     String note;
     ViewPager pager;
-    CirclePageIndicator pagerIndicator;
     ResultPagerAdapter pagerAdapter;
 
     ImageView ivSketch;
@@ -53,7 +52,6 @@ public class ResultActivity extends AppCompatActivity {
         final ArrayList<SketchMatchSDK.Person> people = new Gson().fromJson(getIntent().getStringExtra("people"), type);
 
         pager = (ViewPager) findViewById(R.id.pager);
-        pagerIndicator = (CirclePageIndicator)findViewById(R.id.pagerIndicator);
         ivSketch = (ImageView) findViewById(R.id.ivSketch);
         txtInputName = (TextView) findViewById(R.id.txtInputName);
         txtGender = (TextView) findViewById(R.id.txtGender);
@@ -67,8 +65,6 @@ public class ResultActivity extends AppCompatActivity {
         urlArray.add("https://cdn-images-1.medium.com/fit/c/60/60/1*XKuh9uNCPryD0UWOSvaPrw.jpeg");
         pagerAdapter = new ResultPagerAdapter(ResultActivity.this, getSupportFragmentManager(), urlArray);
         pager.setAdapter(pagerAdapter);
-        pagerIndicator.setViewPager(pager);
-        pagerIndicator.setSnap(true);
     }
 
     @Override
