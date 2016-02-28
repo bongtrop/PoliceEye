@@ -100,7 +100,7 @@ public class HistoryActivity extends AppCompatActivity {
         swipe_refresh_layout.setEnabled(false);
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(8));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(10));
         /*recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(this,
