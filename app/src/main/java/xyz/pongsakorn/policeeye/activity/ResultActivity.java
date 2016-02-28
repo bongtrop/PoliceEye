@@ -1,5 +1,6 @@
 package xyz.pongsakorn.policeeye.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.adapter.ResultPagerAdapter;
+import xyz.pongsakorn.policeeye.utils.DatabaseHandler;
 import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
 
 public class ResultActivity extends AppCompatActivity {
@@ -105,7 +107,11 @@ public class ResultActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_delete) {
-
+            DatabaseHandler db = new DatabaseHandler(ResultActivity.this);
+            db.deleteHistory(fileName);
+            Intent resultIntent = new Intent();
+            setResult(HistoryActivity.RESULT_DELETE, resultIntent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

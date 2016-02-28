@@ -15,10 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.util.ArrayList;
 
 import xyz.pongsakorn.policeeye.adapter.HistoryAdapter;
@@ -30,6 +26,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private final String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
             "/PoliceEye";
+    public static final int RESULT_DELETE = 99;
 
     private static final int GET_INIT_AMOUNT = 10;
     private static final int GET_MORE_AMOUNT = 10;
@@ -128,12 +125,12 @@ public class HistoryActivity extends AppCompatActivity {
 
         Log.e("his", "req " + requestCode + ", res " + resultCode);
         if (requestCode == 0) {
-            DatabaseHandler db = new DatabaseHandler(HistoryActivity.this);
-            historyList = db.getAllHistory();
-            if (recycViewAdapter == null) {
-                recycViewAdapter = new HistoryAdapter(HistoryActivity.this, historyList);
+            if (resultCode == RESULT_DELETE) {
+                DatabaseHandler db = new DatabaseHandler(HistoryActivity.this);
+                historyList = db.getAllHistory();
+                recycViewAdapter.updateData(historyList);
+                recycViewAdapter.notifyDataSetChanged();
             }
-            recyclerView.setAdapter(recycViewAdapter);
         }
     }
 

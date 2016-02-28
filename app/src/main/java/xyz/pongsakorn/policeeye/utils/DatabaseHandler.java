@@ -64,6 +64,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteHistory(String fileName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_HISTORY, KEY_FILE_NAME + " = ?", new String[]{fileName});
+        db.close();
+    }
+
     public ArrayList<HistoryModel> getAllHistory() {
         ArrayList<HistoryModel> historyList = new ArrayList<>();
 

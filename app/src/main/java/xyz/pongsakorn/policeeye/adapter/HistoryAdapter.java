@@ -1,5 +1,6 @@
 package xyz.pongsakorn.policeeye.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
@@ -27,11 +28,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     private final String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/PoliceEye/";
 
-    Context context;
+    Activity act;
     ArrayList<HistoryModel> data;
 
-    public HistoryAdapter(Context context, ArrayList<HistoryModel> data) {
-        this.context = context;
+    public HistoryAdapter(Activity act, ArrayList<HistoryModel> data) {
+        this.act = act;
         this.data = data;
     }
 
@@ -46,24 +47,28 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         viewHolder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ResultActivity.class);
+                Intent intent = new Intent(act, ResultActivity.class);
                 intent.putExtra("fileName", data.get(position).fileName);
                 intent.putExtra("gender", data.get(position).gender);
                 intent.putExtra("note", data.get(position).note);
                 intent.putExtra("name", data.get(position).name);
                 intent.putExtra("people", data.get(position).people);
-                context.startActivity(intent);
+                act.startActivityForResult(intent, 0);
             }
         });
         String[] tmp = data.get(position).fileName.split("-");
         String date = tmp[2] + "/" + tmp[1] + "/" + tmp[0];
-        Glide.with(context)
+        Glide.with(act)
                 .load(new File(file_path + data.get(position).fileName))
                 .into(viewHolder.imSketch);
         viewHolder.txtName.setText(data.get(position).name);
         viewHolder.txtGender.setText(data.get(position).gender);
         viewHolder.txtNote.setText(data.get(position).note);
         viewHolder.txtDate.setText(date);
+    }
+
+    public void updateData(ArrayList<HistoryModel> data) {
+        this.data = data;
     }
 
     @Override
