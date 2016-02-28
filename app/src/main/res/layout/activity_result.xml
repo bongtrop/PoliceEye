@@ -118,17 +118,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/pagerIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="bottom"
-            android:layout_margin="8dp"
-            android:paddingLeft="3dp"
-            android:paddingTop="3dp"
-            android:visibility="gone"/>
-
     </FrameLayout>
 
     <TextView
