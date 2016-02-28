@@ -67,7 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<HistoryModel> getAllHistory() {
         ArrayList<HistoryModel> historyList = new ArrayList<>();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_HISTORY;
+        String selectQuery = "SELECT  * FROM " + TABLE_HISTORY + " ORDER BY " + KEY_FILE_NAME + " DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -83,7 +83,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        Collections.reverse(historyList);
+        //Collections.reverse(historyList);
         return historyList;
     }
 }

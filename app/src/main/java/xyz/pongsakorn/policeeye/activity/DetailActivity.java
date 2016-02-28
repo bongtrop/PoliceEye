@@ -158,6 +158,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public String createPhotoName() {
-        return new SimpleDateFormat("yyyyMMdd-hhmmss'.jpg'").format(new Date());
+        return new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss'.jpg'").format(new Date());
     }
 }

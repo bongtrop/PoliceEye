@@ -55,12 +55,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 context.startActivity(intent);
             }
         });
+        String[] tmp = data.get(position).fileName.split("-");
+        String date = tmp[2] + "/" + tmp[1] + "/" + tmp[0];
         Glide.with(context)
                 .load(new File(file_path + data.get(position).fileName))
                 .into(viewHolder.imSketch);
         viewHolder.txtName.setText(data.get(position).name);
         viewHolder.txtGender.setText(data.get(position).gender);
         viewHolder.txtNote.setText(data.get(position).note);
+        viewHolder.txtDate.setText(date);
     }
 
     @Override
@@ -75,6 +78,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         public TextView txtName;
         public TextView txtGender;
         public TextView txtNote;
+        public TextView txtDate;
 
         private ViewHolder(View v) {
             super(v);
@@ -83,6 +87,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             txtName = (TextView) v.findViewById(R.id.txtName);
             txtGender = (TextView) v.findViewById(R.id.txtGender);
             txtNote = (TextView) v.findViewById(R.id.txtNote);
+            txtDate = (TextView) v.findViewById(R.id.txtDate);
         }
     }
 }
