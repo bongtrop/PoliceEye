@@ -51,7 +51,7 @@ public class ResultTabFragment extends Fragment {
         txtPoint = (TextView) rootView.findViewById(R.id.txtPoint);
 
         txtName.setText(person.name);
-        txtGender.setText(person.sex);
+        txtGender.setText(person.sex.equals("M")?"Male":"Female");
         txtID.setText("("+person.id+")");
         txtPoint.setText(((int)(person.point*100))+"%");
         Glide.with(getActivity().getApplicationContext())

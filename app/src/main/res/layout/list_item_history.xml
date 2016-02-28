@@ -26,7 +26,6 @@
                 android:layout_height="100dp"
                 android:padding="1dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/imagetest"
                 app:ratio="1" />
 
             <TextView

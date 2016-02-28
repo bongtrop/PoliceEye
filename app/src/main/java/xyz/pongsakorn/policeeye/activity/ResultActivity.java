@@ -69,7 +69,7 @@ public class ResultActivity extends AppCompatActivity {
                 .into(ivSketch);
         //ivSketch.setImageBitmap(sketchBitmap);
         txtName.setText(name);
-        txtGender.setText(gender.equals("M")?"Male":"Female");
+        txtGender.setText(gender);
 
         pagerAdapter = new ResultPagerAdapter(ResultActivity.this, getSupportFragmentManager(), people);
         pager.setAdapter(pagerAdapter);
