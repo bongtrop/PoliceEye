@@ -97,14 +97,14 @@ public class DetailActivity extends AppCompatActivity {
             byte[] byteArray = stream.toByteArray();
 
             if (radGroupGender.getCheckedRadioButtonId() == R.id.radMale)
-                gender = "male";
+                gender = "Male";
             else
-                gender = "female";
+                gender = "Female";
 
             note = editNote.getText().toString();
             name = editName.getText().toString();
 
-            sketchMatchSDK.retrieval(byteArray, gender.equals("male") ? "M" : "F", new SketchMatchSDK.Listener() {
+            sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", new SketchMatchSDK.Listener() {
                 @Override
                 public void onSuccess(ArrayList<SketchMatchSDK.Person> people) {
                     dialog.dismiss();
@@ -126,6 +126,8 @@ public class DetailActivity extends AppCompatActivity {
                         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
 
                         String jsonPeople = new Gson().toJson(people);
+                        if (note.equals(""))
+                            note = "-";
                         saveHistoryToDB(fileName, name, gender, note, jsonPeople);
 
                         Intent intent = new Intent(DetailActivity.this, ResultActivity.class);
