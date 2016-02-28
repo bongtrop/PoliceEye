@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
     android:paddingLeft="5dp"
-    android:paddingRight="5dp">
+    android:paddingRight="5dp"
+    android:paddingTop="5dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -18,49 +17,54 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/imSketch"
                 android:layout_width="0dp"
-                android:layout_height="90dp"
-                android:layout_weight="1"
-                android:padding="1dp"
+                android:layout_height="110dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1.1"
                 android:adjustViewBounds="true"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/imagetest"
                 android:background="@drawable/shape_history_photo"
-                android:scaleType="fitCenter"/>
+                android:padding="1dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/imagetest" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="5dp"
+                    android:singleLine="true"
+                    android:text="image1"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
-                        android:singleLine="true"
-                        android:textStyle="bold"
-                        android:text="Input name"/>
+                <TextView
+                    android:id="@+id/txtGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:singleLine="true"
+                    android:text="male"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/txtName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:singleLine="true"
-                        android:text="image1"/>
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="bottom"
+                    android:text="date"
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     tools:context="xyz.pongsakorn.policeeye.activity.IdentikitActivity">
 
     <LinearLayout
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:padding="15dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="15dp">
 
         <ImageView
             android:id="@+id/ivSketch"
@@ -20,7 +20,8 @@
             android:layout_marginLeft="5dp"
             android:background="@drawable/shape_history_photo"
             android:padding="1dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:src="@mipmap/imagetest" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Input name"
+                android:text="Name"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -66,7 +67,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtInputName"
+                android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="sketch1"
@@ -97,9 +98,11 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/viewDivider"
         android:layout_width="match_parent"
         android:layout_height="0.4dp"
-        android:layout_marginTop="10dp"
+        android:layout_below="@id/layout1"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#ccc" />
@@ -107,13 +110,39 @@
     <FrameLayout
         android:id="@+id/contentview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewDivider">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content" />
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/pagerIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom"
+            android:layout_margin="8dp"
+            android:paddingLeft="3dp"
+            android:paddingTop="3dp"
+            android:visibility="gone"/>
 
     </FrameLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/txtOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/layout1"
+        android:layout_marginRight="20dp"
+        android:padding="4dp"
+        android:text="1"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="26sp" />
+
+</RelativeLayout>

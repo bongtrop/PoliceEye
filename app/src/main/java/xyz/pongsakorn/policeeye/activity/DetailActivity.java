@@ -3,9 +3,10 @@ package xyz.pongsakorn.policeeye.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -18,16 +19,22 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import xyz.pongsakorn.policeeye.R;
+import xyz.pongsakorn.policeeye.utils.DatabaseHandler;
 import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
 
 public class DetailActivity extends AppCompatActivity {
 
     Bitmap sketchBitmap;
 
-    EditText editInputName;
+    EditText editName;
     RadioGroup radGroupGender;
     RadioGroup radGroupHeight;
     RadioButton radUnknown;
@@ -39,7 +46,7 @@ public class DetailActivity extends AppCompatActivity {
 
     SketchMatchSDK sketchMatchSDK;
 
-    String inputName;
+    String name;
     String gender;
     String note;
 
@@ -52,7 +59,7 @@ public class DetailActivity extends AppCompatActivity {
 
         sketchBitmap = getIntent().getParcelableExtra("SketchImage");
 
-        editInputName = (EditText) findViewById(R.id.editInputName);
+        editName = (EditText) findViewById(R.id.editName);
         radGroupGender = (RadioGroup) findViewById(R.id.radGroupGender);
         radGroupHeight = (RadioGroup) findViewById(R.id.radGroupHeight);
         radUnknown = (RadioButton) findViewById(R.id.radUnknown);
@@ -63,7 +70,6 @@ public class DetailActivity extends AppCompatActivity {
         ivSketch = (ImageView) findViewById(R.id.ivSketch);
 
         ivSketch.setImageBitmap(sketchBitmap);
-
     }
 
 
@@ -91,24 +97,50 @@ public class DetailActivity extends AppCompatActivity {
             byte[] byteArray = stream.toByteArray();
 
             if (radGroupGender.getCheckedRadioButtonId() == R.id.radMale)
-                gender = "male";
+                gender = "Male";
             else
-                gender = "female";
+                gender = "Female";
 
             note = editNote.getText().toString();
-            inputName = editInputName.getText().toString();
+            name = editName.getText().toString();
 
-            sketchMatchSDK.retrieval(byteArray, gender.equals("male") ? "M" : "F", new SketchMatchSDK.Listener() {
+            sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", new SketchMatchSDK.Listener() {
                 @Override
                 public void onSuccess(ArrayList<SketchMatchSDK.Person> people) {
                     dialog.dismiss();
-                    Intent intent = new Intent(DetailActivity.this, ResultActivity.class);
-                    intent.putExtra("SketchImage", sketchBitmap);
-                    intent.putExtra("gender", gender);
-                    intent.putExtra("note", note);
-                    intent.putExtra("inputName", inputName);
-                    intent.putExtra("people", new Gson().toJson(people));
-                    startActivity(intent);
+
+                    String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
+                            "/PoliceEye";
+                    File dir = new File(file_path);
+                    if (!dir.exists())
+                        dir.mkdirs();
+
+                    String fileName = createPhotoName();
+                    File file = new File(dir, fileName);
+                    FileOutputStream fOut = null;
+                    try {
+                        fOut = new FileOutputStream(file);
+                        sketchBitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                        fOut.flush();
+                        fOut.close();
+                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+
+                        String jsonPeople = new Gson().toJson(people);
+                        if (note.equals(""))
+                            note = "-";
+                        saveHistoryToDB(fileName, name, gender, note, jsonPeople);
+
+                        Intent intent = new Intent(DetailActivity.this, ResultActivity.class);
+                        //intent.putExtra("SketchImage", sketchBitmap);
+                        intent.putExtra("fileName", fileName);
+                        intent.putExtra("gender", gender);
+                        intent.putExtra("note", note);
+                        intent.putExtra("name", name);
+                        intent.putExtra("people", jsonPeople);
+                        startActivity(intent);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     finish();
                 }
 
@@ -119,7 +151,15 @@ public class DetailActivity extends AppCompatActivity {
                 }
             });
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveHistoryToDB(String fileName, String name, String gender, String note, String jsonPeople) {
+        DatabaseHandler db = new DatabaseHandler(DetailActivity.this);
+        db.addHistory(fileName, name, gender, note, jsonPeople);
+    }
+
+    public String createPhotoName() {
+        return new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss'.jpg'").format(new Date());
     }
 }

@@ -107,10 +107,10 @@ public class SketchMatchSDK {
     }
 
     public class Person {
-        String id;
-        String sex;
-        String name;
-        double point;
+        public String id;
+        public String sex;
+        public String name;
+        public double point;
     }
 
     public interface Listener {

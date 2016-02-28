@@ -32,11 +32,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
-                android:text="Input name"
+                android:text="Name"
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/editInputName"
+                android:id="@+id/editName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
