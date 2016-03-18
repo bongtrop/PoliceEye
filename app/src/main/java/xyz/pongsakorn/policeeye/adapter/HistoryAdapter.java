@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +61,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         String date = tmp[2] + "/" + tmp[1] + "/" + tmp[0];
         Glide.with(act)
                 .load(new File(file_path + data.get(position).fileName))
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(viewHolder.imSketch);
         viewHolder.txtName.setText(data.get(position).name);
         viewHolder.txtGender.setText(data.get(position).gender);

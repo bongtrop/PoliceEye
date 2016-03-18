@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
@@ -59,6 +60,7 @@ public class ResultTabFragment extends Fragment {
                 .signature(new StringSignature(person.id))
                 .fitCenter()
                 .error(R.mipmap.imagetest)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(new GlideDrawableImageViewTarget(image) {
                     @Override
                     public void onStart() {

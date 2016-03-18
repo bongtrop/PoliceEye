@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -66,6 +67,7 @@ public class ResultActivity extends AppCompatActivity {
 
         Glide.with(ResultActivity.this)
                 .load(new File(file_path + fileName))
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(ivSketch);
         //ivSketch.setImageBitmap(sketchBitmap);
         txtName.setText(name);

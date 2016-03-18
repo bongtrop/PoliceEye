@@ -120,7 +120,7 @@ public class DetailActivity extends AppCompatActivity {
                         FileOutputStream fOut = null;
                         try {
                             fOut = new FileOutputStream(file);
-                            sketchBitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                            sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, fOut);
                             fOut.flush();
                             fOut.close();
                             sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
