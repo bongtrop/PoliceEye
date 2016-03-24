@@ -102,15 +102,9 @@ public class DetailActivity extends AppCompatActivity {
 
                 byte[] byteArray = stream.toByteArray();
 
-                if (radGroupGender.getCheckedRadioButtonId() == R.id.radMale)
-                    gender = "Male";
-                else
-                    gender = "Female";
+                gender = (radGroupGender.getCheckedRadioButtonId() == R.id.radMale) ? "Male" : "Female";
 
-                if (radGroupAlgo.getCheckedRadioButtonId() == R.id.radSURF)
-                    algo = "usurf";
-                else
-                    algo = "stringgrammar";
+                algo = (radGroupAlgo.getCheckedRadioButtonId() == R.id.radSURF) ? "usurf" : "stringgrammar";
 
                 sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", algo, new SketchMatchSDK.Listener() {
                     @Override
