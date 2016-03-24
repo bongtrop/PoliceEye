@@ -40,11 +40,12 @@ public class SketchMatchSDK {
                 .build();
     }
 
-    public void retrieval(byte[] image, String sex, final Listener listener) {
+    public void retrieval(byte[] image, String sex, String algo, final Listener listener) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("image", "sketch", RequestBody.create(MediaType.parse("image/jpg"), image))
                 .addFormDataPart("sex", sex)
+                .addFormDataPart("algo", algo)
                 .build();
 
         Request request = new Request.Builder()

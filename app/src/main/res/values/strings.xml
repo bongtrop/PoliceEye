@@ -13,6 +13,10 @@
     <string name="action_done">Done</string>
     <string name="action_delete">Delete</string>
 
+    <string name="algorithm">Algorithm</string>
+    <string name="u_surf">U-SURF</string>
+    <string name="string_grammar">String grammar</string>
+    <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="height">Height</string>

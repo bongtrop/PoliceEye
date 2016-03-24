@@ -36,6 +36,7 @@ public class DetailActivity extends AppCompatActivity {
 
     EditText editName;
     RadioGroup radGroupGender;
+    RadioGroup radGroupAlgo;
     RadioGroup radGroupHeight;
     RadioButton radUnknown;
     RadioButton radAround;
@@ -48,6 +49,7 @@ public class DetailActivity extends AppCompatActivity {
 
     String name;
     String gender;
+    String algo;
     String note;
 
     @Override
@@ -61,6 +63,7 @@ public class DetailActivity extends AppCompatActivity {
 
         editName = (EditText) findViewById(R.id.editName);
         radGroupGender = (RadioGroup) findViewById(R.id.radGroupGender);
+        radGroupAlgo = (RadioGroup) findViewById(R.id.radGroupAlgo);
         radGroupHeight = (RadioGroup) findViewById(R.id.radGroupHeight);
         radUnknown = (RadioButton) findViewById(R.id.radUnknown);
         radAround = (RadioButton) findViewById(R.id.radAround);
@@ -104,7 +107,12 @@ public class DetailActivity extends AppCompatActivity {
                 else
                     gender = "Female";
 
-                sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", new SketchMatchSDK.Listener() {
+                if (radGroupAlgo.getCheckedRadioButtonId() == R.id.radSURF)
+                    algo = "usurf";
+                else
+                    algo = "stringgrammar";
+
+                sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", algo, new SketchMatchSDK.Listener() {
                     @Override
                     public void onSuccess(ArrayList<SketchMatchSDK.Person> people) {
                         dialog.dismiss();

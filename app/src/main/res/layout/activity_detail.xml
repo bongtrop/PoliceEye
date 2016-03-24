@@ -42,12 +42,19 @@
                 android:textSize="13sp"
                 android:singleLine="true" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/gender"
+                android:textSize="15sp" />
+
             <RadioGroup
                 android:id="@+id/radGroupGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checkedButton="@+id/radMale"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -63,6 +70,37 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/female" />
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/algorithm"
+                android:textSize="15sp" />
+
+            <RadioGroup
+                android:id="@+id/radGroupAlgo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/radSURF"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radSURF"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/u_surf" />
+
+                <RadioButton
+                    android:id="@+id/radStringGrammar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/string_grammar" />
 
             </RadioGroup>
 
