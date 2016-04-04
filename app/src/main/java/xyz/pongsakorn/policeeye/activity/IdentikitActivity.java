@@ -178,17 +178,17 @@ public class IdentikitActivity extends AppCompatActivity {
             }
 
             case MotionEvent.ACTION_MOVE: {
-                if (!isScaling) {
-                    // Find the index of the active pointer and fetch its position
-                    final int pointerIndex =
-                            MotionEventCompat.findPointerIndex(ev, mActivePointerId);
 
-                    final float x = MotionEventCompat.getX(ev, pointerIndex);
-                    final float y = MotionEventCompat.getY(ev, pointerIndex);
+                // Find the index of the active pointer and fetch its position
+                final int pointerIndex =
+                        MotionEventCompat.findPointerIndex(ev, mActivePointerId);
 
-                    // Calculate the distance moved
-                    final float dx = x - mLastTouchX;
-                    final float dy = y - mLastTouchY;
+                final float x = MotionEventCompat.getX(ev, pointerIndex);
+                final float y = MotionEventCompat.getY(ev, pointerIndex);
+
+                // Calculate the distance moved
+                final float dx = x - mLastTouchX;
+                final float dy = y - mLastTouchY;
 
                 /*TranslateAnimation anim = new TranslateAnimation(0, 0,
                         TranslateAnimation.ABSOLUTE, dx, 0, 0,
@@ -198,6 +198,7 @@ public class IdentikitActivity extends AppCompatActivity {
                 anim.setDuration(0);
                 ivHair.startAnimation(anim);*/
 
+                if (!isScaling) {
                     switch (currentComposite) {
                         case JAW:
                             moveView(ivJaw, dx, dy);
@@ -218,6 +219,7 @@ public class IdentikitActivity extends AppCompatActivity {
                             moveView(ivMouth, dx, dy);
                             break;
                     }
+                }
 
                 /*ivHair.animate()
                         .translationX(dx)
@@ -231,10 +233,9 @@ public class IdentikitActivity extends AppCompatActivity {
                 /*mPosX += dx;
                 mPosY += dy;*/
 
-                    // Remember this touch position for the next move event
-                    mLastTouchX = x;
-                    mLastTouchY = y;
-                }
+                // Remember this touch position for the next move event
+                mLastTouchX = x;
+                mLastTouchY = y;
 
                 break;
             }
@@ -274,7 +275,7 @@ public class IdentikitActivity extends AppCompatActivity {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             float scale = 1f;
-            //isScaling = true;
+            isScaling = true;
             switch (currentComposite) {
                 case JAW:
                     scale = scaleJaw;
@@ -331,6 +332,12 @@ public class IdentikitActivity extends AppCompatActivity {
                     break;
             }
             return true;
+        }
+
+        @Override
+        public void onScaleEnd(ScaleGestureDetector detector) {
+            super.onScaleEnd(detector);
+            isScaling = false;
         }
     }
 
