@@ -48,6 +48,7 @@ public class IdentikitActivity extends AppCompatActivity {
     private float scaleNose;
     private float scaleMouth;
     private ScaleGestureDetector SGD;
+    private boolean isScaling;
     private FacialComposite currentComposite;
     private int faceCompItemOnCanvas;
 
@@ -70,6 +71,7 @@ public class IdentikitActivity extends AppCompatActivity {
     }
 
     private void initValue() {
+        isScaling = false;
         currentComposite = FacialComposite.HAIR;
         faceCompItemOnCanvas = 0;
         scaleJaw = initScale;
@@ -157,6 +159,8 @@ public class IdentikitActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        /*isScaling = false;
+        SGD.onTouchEvent(ev);*/
         final int action = MotionEventCompat.getActionMasked(ev);
 
         switch (action) {
@@ -174,16 +178,17 @@ public class IdentikitActivity extends AppCompatActivity {
             }
 
             case MotionEvent.ACTION_MOVE: {
-                // Find the index of the active pointer and fetch its position
-                final int pointerIndex =
-                        MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                if (!isScaling) {
+                    // Find the index of the active pointer and fetch its position
+                    final int pointerIndex =
+                            MotionEventCompat.findPointerIndex(ev, mActivePointerId);
 
-                final float x = MotionEventCompat.getX(ev, pointerIndex);
-                final float y = MotionEventCompat.getY(ev, pointerIndex);
+                    final float x = MotionEventCompat.getX(ev, pointerIndex);
+                    final float y = MotionEventCompat.getY(ev, pointerIndex);
 
-                // Calculate the distance moved
-                final float dx = x - mLastTouchX;
-                final float dy = y - mLastTouchY;
+                    // Calculate the distance moved
+                    final float dx = x - mLastTouchX;
+                    final float dy = y - mLastTouchY;
 
                 /*TranslateAnimation anim = new TranslateAnimation(0, 0,
                         TranslateAnimation.ABSOLUTE, dx, 0, 0,
@@ -193,26 +198,26 @@ public class IdentikitActivity extends AppCompatActivity {
                 anim.setDuration(0);
                 ivHair.startAnimation(anim);*/
 
-                switch (currentComposite) {
-                    case JAW:
-                        moveView(ivJaw, dx, dy);
-                        break;
-                    case HAIR:
-                        moveView(ivHair, dx, dy);
-                        break;
-                    case EYEBROWS:
-                        moveView(ivEyebrows, dx, dy);
-                        break;
-                    case EYES:
-                        moveView(ivEyes, dx, dy);
-                        break;
-                    case NOSE:
-                        moveView(ivNose, dx, dy);
-                        break;
-                    case MOUTH:
-                        moveView(ivMouth, dx, dy);
-                        break;
-                }
+                    switch (currentComposite) {
+                        case JAW:
+                            moveView(ivJaw, dx, dy);
+                            break;
+                        case HAIR:
+                            moveView(ivHair, dx, dy);
+                            break;
+                        case EYEBROWS:
+                            moveView(ivEyebrows, dx, dy);
+                            break;
+                        case EYES:
+                            moveView(ivEyes, dx, dy);
+                            break;
+                        case NOSE:
+                            moveView(ivNose, dx, dy);
+                            break;
+                        case MOUTH:
+                            moveView(ivMouth, dx, dy);
+                            break;
+                    }
 
                 /*ivHair.animate()
                         .translationX(dx)
@@ -226,9 +231,10 @@ public class IdentikitActivity extends AppCompatActivity {
                 /*mPosX += dx;
                 mPosY += dy;*/
 
-                // Remember this touch position for the next move event
-                mLastTouchX = x;
-                mLastTouchY = y;
+                    // Remember this touch position for the next move event
+                    mLastTouchX = x;
+                    mLastTouchY = y;
+                }
 
                 break;
             }
@@ -268,6 +274,7 @@ public class IdentikitActivity extends AppCompatActivity {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             float scale = 1f;
+            //isScaling = true;
             switch (currentComposite) {
                 case JAW:
                     scale = scaleJaw;
@@ -346,7 +353,7 @@ public class IdentikitActivity extends AppCompatActivity {
         view.setLayoutParams(layoutParams);
     }
 
-    public static Bitmap TrimBitmap(Bitmap bmp, int paddingPx) {
+    public static int[] findEdgeForTrimBitmap(Bitmap bmp, int paddingPx) {
         int imgHeight = bmp.getHeight();
         int imgWidth = bmp.getWidth();
 
@@ -413,12 +420,22 @@ public class IdentikitActivity extends AppCompatActivity {
             endWidth = imgWidth;
         if (endHeight > imgHeight)
             endHeight = imgHeight;
+        return new int[]{startWidth, endWidth, startHeight, endHeight};
+    }
+
+    public static Bitmap trimBitmap(Bitmap bmp, int[] edge) {
+        /*
+        edge[0] = startWidth
+        edge[1] = endWidth
+        edge[2] = startHeight
+        edge[3] = endHeight
+        */
         return Bitmap.createBitmap(
                 bmp,
-                startWidth,
-                startHeight,
-                endWidth - startWidth,
-                endHeight - startHeight
+                edge[0],
+                edge[2],
+                edge[1] - edge[0],
+                edge[3] - edge[2]
         );
     }
 
@@ -443,10 +460,17 @@ public class IdentikitActivity extends AppCompatActivity {
                 layoutSketch.setDrawingCacheEnabled(true);
                 //Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
                 Bitmap result = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
+
+                ivHair.setVisibility(View.GONE);
+                Bitmap resultWithoutHair = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
                 layoutSketch.setDrawingCacheEnabled(false);
-                result = TrimBitmap(result, 15);
+                int[] edge = findEdgeForTrimBitmap(result, 15);
+                result = trimBitmap(result, edge);
+                resultWithoutHair = trimBitmap(resultWithoutHair, edge);
+                ivHair.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(IdentikitActivity.this, DetailActivity.class);
                 intent.putExtra("SketchImage", result);
+                intent.putExtra("SketchImageWithoutHair", resultWithoutHair);
                 startActivity(intent);
             } else
                 Toast.makeText(this, "Some face composite are empty.", Toast.LENGTH_SHORT).show();

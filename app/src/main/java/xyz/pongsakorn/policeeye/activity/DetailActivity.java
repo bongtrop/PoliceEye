@@ -1,6 +1,7 @@
 package xyz.pongsakorn.policeeye.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -32,7 +33,9 @@ import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
 
 public class DetailActivity extends AppCompatActivity {
 
+    Context context;
     Bitmap sketchBitmap;
+    Bitmap sketchBitmapWithoutHair;
 
     EditText editName;
     RadioGroup radGroupGender;
@@ -56,10 +59,12 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        context = getApplicationContext();
 
         sketchMatchSDK = new SketchMatchSDK("http://pongsakorn.xyz:8080");
 
         sketchBitmap = getIntent().getParcelableExtra("SketchImage");
+        sketchBitmapWithoutHair = getIntent().getParcelableExtra("SketchImageWithoutHair");
 
         editName = (EditText) findViewById(R.id.editName);
         radGroupGender = (RadioGroup) findViewById(R.id.radGroupGender);
@@ -97,14 +102,15 @@ public class DetailActivity extends AppCompatActivity {
 
                 dialog.show();
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
-
-                byte[] byteArray = stream.toByteArray();
-
                 gender = (radGroupGender.getCheckedRadioButtonId() == R.id.radMale) ? "Male" : "Female";
-
                 algo = (radGroupAlgo.getCheckedRadioButtonId() == R.id.radSURF) ? "usurf" : "stringgrammar";
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                if (algo.equals("usurf"))
+                    sketchBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+                else
+                    sketchBitmapWithoutHair.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+                byte[] byteArray = stream.toByteArray();
 
                 sketchMatchSDK.retrieval(byteArray, gender.equalsIgnoreCase("male") ? "M" : "F", algo, new SketchMatchSDK.Listener() {
                     @Override
@@ -148,12 +154,12 @@ public class DetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onFail(String error) {
-                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, error, Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
                 });
             } else
-                Toast.makeText(getApplicationContext(), "Please enter name.", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Please enter name.", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
