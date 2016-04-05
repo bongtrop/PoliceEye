@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -41,12 +42,18 @@ public class IdentikitActivity extends AppCompatActivity {
     private float mLastTouchX;
     private float mLastTouchY;
     private float initScale = 2f;
-    private float scaleJaw;
-    private float scaleHair;
-    private float scaleEyebrows;
-    private float scaleEyes;
-    private float scaleNose;
-    private float scaleMouth;
+    private float scaleJawX;
+    private float scaleJawY;
+    private float scaleHairX;
+    private float scaleHairY;
+    private float scaleEyebrowsX;
+    private float scaleEyebrowsY;
+    private float scaleEyesX;
+    private float scaleEyesY;
+    private float scaleNoseX;
+    private float scaleNoseY;
+    private float scaleMouthX;
+    private float scaleMouthY;
     private ScaleGestureDetector SGD;
     private boolean isScaling;
     private FacialComposite currentComposite;
@@ -74,12 +81,18 @@ public class IdentikitActivity extends AppCompatActivity {
         isScaling = false;
         currentComposite = FacialComposite.HAIR;
         faceCompItemOnCanvas = 0;
-        scaleJaw = initScale;
-        scaleHair = initScale;
-        scaleEyebrows = initScale;
-        scaleEyes = initScale;
-        scaleNose = initScale;
-        scaleMouth = initScale;
+        scaleJawX = initScale;
+        scaleJawY = initScale;
+        scaleHairX = initScale;
+        scaleHairY = initScale;
+        scaleEyebrowsX = initScale;
+        scaleEyebrowsY = initScale;
+        scaleEyesX = initScale;
+        scaleEyesY = initScale;
+        scaleNoseX = initScale;
+        scaleNoseY = initScale;
+        scaleMouthX = initScale;
+        scaleMouthY = initScale;
 
         matrix.setScale(initScale, initScale);
         ivJaw.setImageMatrix(matrix);
@@ -274,61 +287,79 @@ public class IdentikitActivity extends AppCompatActivity {
 
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            float scale = 1f;
+            float scaleX = 1f;
+            float scaleY = 1f;
             isScaling = true;
             switch (currentComposite) {
                 case JAW:
-                    scale = scaleJaw;
+                    scaleX = scaleJawX;
+                    scaleY = scaleJawY;
                     break;
                 case HAIR:
-                    scale = scaleHair;
+                    scaleX = scaleHairX;
+                    scaleY = scaleHairY;
                     break;
                 case EYEBROWS:
-                    scale = scaleEyebrows;
+                    scaleX = scaleEyebrowsX;
+                    scaleY = scaleEyebrowsY;
                     break;
                 case EYES:
-                    scale = scaleEyes;
+                    scaleX = scaleEyesX;
+                    scaleY = scaleEyesY;
                     break;
                 case NOSE:
-                    scale = scaleNose;
+                    scaleX = scaleNoseX;
+                    scaleY = scaleNoseY;
                     break;
                 case MOUTH:
-                    scale = scaleMouth;
+                    scaleX = scaleMouthX;
+                    scaleY = scaleMouthY;
                     break;
             }
-            scale *= detector.getScaleFactor();
-            scale = Math.max(0.1f, Math.min(scale, 4.0f));
-            matrix.setScale(scale, scale);
+            Log.e("iden", String.valueOf(detector.getCurrentSpanX()) + " " + String.valueOf(detector.getCurrentSpanY()) + " " + String.valueOf(detector.getScaleFactor()));
+            /*scale *= detector.getScaleFactor();
+            scale = Math.max(0.1f, Math.min(scale, 4.0f));*/
+            scaleX *= detector.getCurrentSpanX() / detector.getPreviousSpanX();
+            scaleX = Math.max(0.1f, Math.min(scaleX, 4.0f));
+            scaleY *= detector.getCurrentSpanY() / detector.getPreviousSpanY();
+            scaleY = Math.max(0.1f, Math.min(scaleY, 4.0f));
+            matrix.setScale(scaleX, scaleY);
             switch (currentComposite) {
                 case JAW:
                     if (ivJaw.getVisibility() == View.GONE) return true;
                     ivJaw.setImageMatrix(matrix);
-                    scaleJaw = scale;
+                    scaleJawX = scaleX;
+                    scaleJawY = scaleY;
                     break;
                 case HAIR:
                     if (ivHair.getVisibility() == View.GONE) return true;
                     ivHair.setImageMatrix(matrix);
-                    scaleHair = scale;
+                    scaleHairX = scaleX;
+                    scaleHairY = scaleY;
                     break;
                 case EYEBROWS:
                     if (ivEyebrows.getVisibility() == View.GONE) return true;
                     ivEyebrows.setImageMatrix(matrix);
-                    scaleEyebrows = scale;
+                    scaleEyebrowsX = scaleX;
+                    scaleEyebrowsY = scaleY;
                     break;
                 case EYES:
                     if (ivEyes.getVisibility() == View.GONE) return true;
                     ivEyes.setImageMatrix(matrix);
-                    scaleEyes = scale;
+                    scaleEyesX = scaleX;
+                    scaleEyesY = scaleY;
                     break;
                 case NOSE:
                     if (ivNose.getVisibility() == View.GONE) return true;
                     ivNose.setImageMatrix(matrix);
-                    scaleNose = scale;
+                    scaleNoseX = scaleX;
+                    scaleNoseY = scaleY;
                     break;
                 case MOUTH:
                     if (ivMouth.getVisibility() == View.GONE) return true;
                     ivMouth.setImageMatrix(matrix);
-                    scaleMouth = scale;
+                    scaleMouthX = scaleX;
+                    scaleMouthY = scaleY;
                     break;
             }
             return true;
