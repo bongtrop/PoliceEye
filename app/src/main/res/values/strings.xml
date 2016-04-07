@@ -32,9 +32,30 @@
         <item>@mipmap/hair491</item>
         <item>@mipmap/hair492</item>
         <item>@mipmap/hair493</item>
+        <item>@mipmap/hair500</item>
+        <item>@mipmap/hair501</item>
+        <item>@mipmap/hair504</item>
         <item>@mipmap/hair505</item>
+        <item>@mipmap/hair507</item>
+        <item>@mipmap/hair508</item>
+        <item>@mipmap/hair510</item>
+        <item>@mipmap/hair512</item>
+        <item>@mipmap/hair513</item>
+        <item>@mipmap/hair514</item>
+        <item>@mipmap/hair515</item>
+        <item>@mipmap/hair518</item>
+        <item>@mipmap/hair522</item>
         <item>@mipmap/hair525</item>
+        <item>@mipmap/hair528</item>
         <item>@mipmap/hair530</item>
+        <item>@mipmap/hair532</item>
+        <item>@mipmap/hair536</item>
+        <item>@mipmap/hair545</item>
+        <item>@mipmap/hair548</item>
+        <item>@mipmap/hair553</item>
+        <item>@mipmap/hair554</item>
+        <item>@mipmap/hair555</item>
+        <item>@mipmap/hair557</item>
     </array>
 
     <array name="res_jaw_styles">
@@ -46,9 +67,30 @@
         <item>@mipmap/jaw491</item>
         <item>@mipmap/jaw492</item>
         <item>@mipmap/jaw493</item>
+        <item>@mipmap/jaw500</item>
+        <item>@mipmap/jaw501</item>
+        <item>@mipmap/jaw504</item>
         <item>@mipmap/jaw505</item>
+        <item>@mipmap/jaw507</item>
+        <item>@mipmap/jaw508</item>
+        <item>@mipmap/jaw510</item>
+        <item>@mipmap/jaw512</item>
+        <item>@mipmap/jaw513</item>
+        <item>@mipmap/jaw514</item>
+        <item>@mipmap/jaw515</item>
+        <item>@mipmap/jaw518</item>
+        <item>@mipmap/jaw522</item>
         <item>@mipmap/jaw525</item>
+        <item>@mipmap/jaw528</item>
         <item>@mipmap/jaw530</item>
+        <item>@mipmap/jaw532</item>
+        <item>@mipmap/jaw536</item>
+        <item>@mipmap/jaw545</item>
+        <item>@mipmap/jaw548</item>
+        <item>@mipmap/jaw553</item>
+        <item>@mipmap/jaw554</item>
+        <item>@mipmap/jaw555</item>
+        <item>@mipmap/jaw557</item>
     </array>
 
     <array name="res_eyebrows_styles">
@@ -60,9 +102,30 @@
         <item>@mipmap/eyebrows491</item>
         <item>@mipmap/eyebrows492</item>
         <item>@mipmap/eyebrows493</item>
+        <item>@mipmap/eyebrows500</item>
+        <item>@mipmap/eyebrows501</item>
+        <item>@mipmap/eyebrows504</item>
         <item>@mipmap/eyebrows505</item>
+        <item>@mipmap/eyebrows507</item>
+        <item>@mipmap/eyebrows508</item>
+        <item>@mipmap/eyebrows510</item>
+        <item>@mipmap/eyebrows512</item>
+        <item>@mipmap/eyebrows513</item>
+        <item>@mipmap/eyebrows514</item>
+        <item>@mipmap/eyebrows515</item>
+        <item>@mipmap/eyebrows518</item>
+        <item>@mipmap/eyebrows522</item>
         <item>@mipmap/eyebrows525</item>
+        <item>@mipmap/eyebrows528</item>
         <item>@mipmap/eyebrows530</item>
+        <item>@mipmap/eyebrows532</item>
+        <item>@mipmap/eyebrows536</item>
+        <item>@mipmap/eyebrows545</item>
+        <item>@mipmap/eyebrows548</item>
+        <item>@mipmap/eyebrows553</item>
+        <item>@mipmap/eyebrows554</item>
+        <item>@mipmap/eyebrows555</item>
+        <item>@mipmap/eyebrows557</item>
     </array>
 
     <array name="res_eyes_styles">
@@ -74,9 +137,30 @@
         <item>@mipmap/eyes491</item>
         <item>@mipmap/eyes492</item>
         <item>@mipmap/eyes493</item>
+        <item>@mipmap/eyes500</item>
+        <item>@mipmap/eyes501</item>
+        <item>@mipmap/eyes504</item>
         <item>@mipmap/eyes505</item>
+        <item>@mipmap/eyes507</item>
+        <item>@mipmap/eyes508</item>
+        <item>@mipmap/eyes510</item>
+        <item>@mipmap/eyes512</item>
+        <item>@mipmap/eyes513</item>
+        <item>@mipmap/eyes514</item>
+        <item>@mipmap/eyes515</item>
+        <item>@mipmap/eyes518</item>
+        <item>@mipmap/eyes522</item>
         <item>@mipmap/eyes525</item>
+        <item>@mipmap/eyes528</item>
         <item>@mipmap/eyes530</item>
+        <item>@mipmap/eyes532</item>
+        <item>@mipmap/eyes536</item>
+        <item>@mipmap/eyes545</item>
+        <item>@mipmap/eyes548</item>
+        <item>@mipmap/eyes553</item>
+        <item>@mipmap/eyes554</item>
+        <item>@mipmap/eyes555</item>
+        <item>@mipmap/eyes557</item>
     </array>
 
     <array name="res_nose_styles">
@@ -88,9 +172,30 @@
         <item>@mipmap/nose491</item>
         <item>@mipmap/nose492</item>
         <item>@mipmap/nose493</item>
+        <item>@mipmap/nose500</item>
+        <item>@mipmap/nose501</item>
+        <item>@mipmap/nose504</item>
         <item>@mipmap/nose505</item>
+        <item>@mipmap/nose507</item>
+        <item>@mipmap/nose508</item>
+        <item>@mipmap/nose510</item>
+        <item>@mipmap/nose512</item>
+        <item>@mipmap/nose513</item>
+        <item>@mipmap/nose514</item>
+        <item>@mipmap/nose515</item>
+        <item>@mipmap/nose518</item>
+        <item>@mipmap/nose522</item>
         <item>@mipmap/nose525</item>
+        <item>@mipmap/nose528</item>
         <item>@mipmap/nose530</item>
+        <item>@mipmap/nose532</item>
+        <item>@mipmap/nose536</item>
+        <item>@mipmap/nose545</item>
+        <item>@mipmap/nose548</item>
+        <item>@mipmap/nose553</item>
+        <item>@mipmap/nose554</item>
+        <item>@mipmap/nose555</item>
+        <item>@mipmap/nose557</item>
     </array>
 
     <array name="res_mouth_styles">
@@ -102,9 +207,30 @@
         <item>@mipmap/mouth491</item>
         <item>@mipmap/mouth492</item>
         <item>@mipmap/mouth493</item>
+        <item>@mipmap/mouth500</item>
+        <item>@mipmap/mouth501</item>
+        <item>@mipmap/mouth504</item>
         <item>@mipmap/mouth505</item>
+        <item>@mipmap/mouth507</item>
+        <item>@mipmap/mouth508</item>
+        <item>@mipmap/mouth510</item>
+        <item>@mipmap/mouth512</item>
+        <item>@mipmap/mouth513</item>
+        <item>@mipmap/mouth514</item>
+        <item>@mipmap/mouth515</item>
+        <item>@mipmap/mouth518</item>
+        <item>@mipmap/mouth522</item>
         <item>@mipmap/mouth525</item>
+        <item>@mipmap/mouth528</item>
         <item>@mipmap/mouth530</item>
+        <item>@mipmap/mouth532</item>
+        <item>@mipmap/mouth536</item>
+        <item>@mipmap/mouth545</item>
+        <item>@mipmap/mouth548</item>
+        <item>@mipmap/mouth553</item>
+        <item>@mipmap/mouth554</item>
+        <item>@mipmap/mouth555</item>
+        <item>@mipmap/mouth557</item>
     </array>
 
 </resources>
