@@ -26,8 +26,6 @@ import xyz.pongsakorn.policeeye.widget.GridSpacingItemDecoration;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    private final String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
-            "/PoliceEye";
     public static final int RESULT_DELETE = 99;
 
     private static final int GET_INIT_AMOUNT = 10;

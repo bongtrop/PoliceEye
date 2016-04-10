@@ -1,5 +1,6 @@
 package xyz.pongsakorn.policeeye.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -19,9 +20,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
 import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.adapter.FaceCompositeAdapter;
 import xyz.pongsakorn.policeeye.adapter.FaceCompositeStyleAdapter;
+import xyz.pongsakorn.policeeye.utils.Utils;
 
 public class IdentikitActivity extends AppCompatActivity {
 
@@ -461,6 +468,76 @@ public class IdentikitActivity extends AppCompatActivity {
         return new int[]{startWidth, endWidth, startHeight, endHeight};
     }
 
+    public static int[] findInsideEdgeFromEdge(Bitmap bmp, int[] edge, int paddingPx) {
+        int imgHeight = bmp.getHeight();
+        int imgWidth = bmp.getWidth();
+
+        //TRIM WIDTH - LEFT
+        int startWidth = 0;
+        for (int x = edge[0]; x < imgWidth; x++) {
+            if (startWidth == 0) {
+                for (int y = 0; y < imgHeight; y++) {
+                    if (bmp.getPixel(x, y) != Color.WHITE) {
+                        startWidth = x;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+        //TRIM WIDTH - RIGHT
+        int endWidth = 0;
+        for (int x = imgWidth - 1; x >= 0; x--) {
+            if (endWidth == 0) {
+                for (int y = 0; y < imgHeight; y++) {
+                    if (bmp.getPixel(x, y) != Color.WHITE) {
+                        endWidth = x;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+        //TRIM HEIGHT - TOP
+        int startHeight = 0;
+        for (int y = 0; y < imgHeight; y++) {
+            if (startHeight == 0) {
+                for (int x = 0; x < imgWidth; x++) {
+                    if (bmp.getPixel(x, y) != Color.WHITE) {
+                        startHeight = y;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+        //TRIM HEIGHT - BOTTOM
+        int endHeight = 0;
+        for (int y = imgHeight - 1; y >= 0; y--) {
+            if (endHeight == 0) {
+                for (int x = 0; x < imgWidth; x++) {
+                    if (bmp.getPixel(x, y) != Color.WHITE) {
+                        endHeight = y;
+                        break;
+                    }
+                }
+            } else break;
+        }
+        startWidth -= paddingPx;
+        endWidth += paddingPx;
+        startHeight -= paddingPx;
+        endHeight += paddingPx;
+        if (startWidth < 0)
+            startWidth = 0;
+        if (startHeight < 0)
+            startHeight = 0;
+        if (endWidth > imgWidth)
+            endWidth = imgWidth;
+        if (endHeight > imgHeight)
+            endHeight = imgHeight;
+        return new int[]{startWidth, endWidth, startHeight, endHeight};
+    }
+
     public static Bitmap trimBitmap(Bitmap bmp, int[] edge) {
         /*
         edge[0] = startWidth
@@ -499,16 +576,82 @@ public class IdentikitActivity extends AppCompatActivity {
                 //Bitmap result = Bitmap.createBitmap(layoutSketch.getDrawingCache());
                 Bitmap result = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
 
+                ivJaw.setVisibility(View.GONE);
                 ivHair.setVisibility(View.GONE);
-                Bitmap resultWithoutHair = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
-                layoutSketch.setDrawingCacheEnabled(false);
+                ivEyebrows.setVisibility(View.GONE);
+                ivEyes.setVisibility(View.GONE);
+                ivNose.setVisibility(View.GONE);
+                ivMouth.setVisibility(View.GONE);
+
+                ivJaw.setVisibility(View.VISIBLE);
+                Bitmap resultJaw = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
+                ivJaw.setVisibility(View.GONE);
+
+                ivHair.setVisibility(View.VISIBLE);
+                Bitmap resultHair = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
+                ivHair.setVisibility(View.GONE);
+
+                ivEyebrows.setVisibility(View.VISIBLE);
+                Bitmap resultEyebrows = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
+                ivEyebrows.setVisibility(View.GONE);
+
+                ivEyes.setVisibility(View.VISIBLE);
+                Bitmap resultEyes = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
+                ivEyes.setVisibility(View.GONE);
+
+                ivNose.setVisibility(View.VISIBLE);
+                Bitmap resultNose = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
+                ivNose.setVisibility(View.GONE);
+
+                ivMouth.setVisibility(View.VISIBLE);
+                Bitmap resultMouth = Bitmap.createScaledBitmap(layoutSketch.getDrawingCache(), 200, 220, false);
+                ivMouth.setVisibility(View.GONE);
+
                 int[] edge = findEdgeForTrimBitmap(result, 15);
                 result = trimBitmap(result, edge);
-                resultWithoutHair = trimBitmap(resultWithoutHair, edge);
+                resultJaw = trimBitmap(resultJaw, edge);
+                resultJaw = trimBitmap(resultJaw, findEdgeForTrimBitmap(resultJaw, 0));
+                resultHair = trimBitmap(resultHair, edge);
+                resultHair = trimBitmap(resultHair, findEdgeForTrimBitmap(resultHair, 0));
+                resultEyebrows = trimBitmap(resultEyebrows, edge);
+                resultEyebrows = trimBitmap(resultEyebrows, findEdgeForTrimBitmap(resultEyebrows, 0));
+                resultEyes = trimBitmap(resultEyes, edge);
+                resultEyes = trimBitmap(resultEyes, findEdgeForTrimBitmap(resultEyes, 0));
+                resultNose = trimBitmap(resultNose, edge);
+                resultNose = trimBitmap(resultNose, findEdgeForTrimBitmap(resultNose, 0));
+                resultMouth = trimBitmap(resultMouth, edge);
+                resultMouth = trimBitmap(resultMouth, findEdgeForTrimBitmap(resultMouth, 0));
+                layoutSketch.setDrawingCacheEnabled(false);
+                ivJaw.setVisibility(View.VISIBLE);
                 ivHair.setVisibility(View.VISIBLE);
+                ivEyebrows.setVisibility(View.VISIBLE);
+                ivEyes.setVisibility(View.VISIBLE);
+                ivNose.setVisibility(View.VISIBLE);
+                ivMouth.setVisibility(View.VISIBLE);
+
+                /*Utils.saveSketchCacheFile(IdentikitActivity.this, "jaw", resultJaw);
+                Utils.saveSketchCacheFile(IdentikitActivity.this, "hair", resultHair);
+                Utils.saveSketchCacheFile(IdentikitActivity.this, "eyebrows", resultEyebrows);
+                Utils.saveSketchCacheFile(IdentikitActivity.this, "eyes", resultEyes);
+                Utils.saveSketchCacheFile(IdentikitActivity.this, "nose", resultNose);
+                Utils.saveSketchCacheFile(IdentikitActivity.this, "mouth", resultMouth);*/
+                String fileName = Utils.createPhotoName();
+                Utils.saveBitmapToJPG(IdentikitActivity.this, fileName.replace(".jpg", "") + "-jaw.jpg", resultJaw);
+                Utils.saveBitmapToJPG(IdentikitActivity.this, fileName.replace(".jpg", "") + "-hair.jpg", resultHair);
+                Utils.saveBitmapToJPG(IdentikitActivity.this, fileName.replace(".jpg", "") + "-eyebrows.jpg", resultEyebrows);
+                Utils.saveBitmapToJPG(IdentikitActivity.this, fileName.replace(".jpg", "") + "-eyes.jpg", resultEyes);
+                Utils.saveBitmapToJPG(IdentikitActivity.this, fileName.replace(".jpg", "") + "-nose.jpg", resultNose);
+                Utils.saveBitmapToJPG(IdentikitActivity.this, fileName.replace(".jpg", "") + "-mouth.jpg", resultMouth);
+
                 Intent intent = new Intent(IdentikitActivity.this, DetailActivity.class);
                 intent.putExtra("SketchImage", result);
-                intent.putExtra("SketchImageWithoutHair", resultWithoutHair);
+                intent.putExtra("fileName", fileName);
+                /*intent.putExtra("SketchImageJaw", resultJaw);
+                intent.putExtra("SketchImageHair", resultHair);
+                intent.putExtra("SketchImageEyebrows", resultEyebrows);
+                intent.putExtra("SketchImageEyes", resultEyes);
+                intent.putExtra("SketchImageNose", resultNose);
+                intent.putExtra("SketchImageMouth", resultMouth);*/
                 startActivity(intent);
             } else
                 Toast.makeText(this, "Some face composite are empty.", Toast.LENGTH_SHORT).show();

@@ -40,14 +40,32 @@ public class SketchMatchSDK {
                 .build();
     }
 
-    public void retrieval(byte[] image, String sex, String algo, final Listener listener) {
+    public void retrievalUSURF(byte[] image, String sex, String algo, final Listener listener) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("image", "sketch", RequestBody.create(MediaType.parse("image/jpg"), image))
                 .addFormDataPart("sex", sex)
                 .addFormDataPart("algo", algo)
                 .build();
+        retrieval(requestBody, listener);
+    }
 
+    public void retrievalStringGrammar(byte[] jaw, byte[] hair, byte[] eyebrows, byte[] eyes, byte[] nose, byte[] mouth, String sex, String algo, final Listener listener) {
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("jaw", "jaw", RequestBody.create(MediaType.parse("image/jpg"), jaw))
+                .addFormDataPart("hair", "hair", RequestBody.create(MediaType.parse("image/jpg"), hair))
+                .addFormDataPart("eyebrows", "eyebrows", RequestBody.create(MediaType.parse("image/jpg"), eyebrows))
+                .addFormDataPart("eyes", "eyes", RequestBody.create(MediaType.parse("image/jpg"), eyes))
+                .addFormDataPart("nose", "nose", RequestBody.create(MediaType.parse("image/jpg"), nose))
+                .addFormDataPart("mouth", "mouth", RequestBody.create(MediaType.parse("image/jpg"), mouth))
+                .addFormDataPart("sex", sex)
+                .addFormDataPart("algo", algo)
+                .build();
+        retrieval(requestBody, listener);
+    }
+
+    public void retrieval(RequestBody requestBody, final Listener listener) {
         Request request = new Request.Builder()
                 .url(url+"/identiface")
                 .post(requestBody)

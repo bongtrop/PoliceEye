@@ -28,6 +28,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_GENDER = "gender";
     private static final String KEY_NOTE = "note";
     private static final String KEY_PEOPLE = "people";
+    private static final String KEY_ALGO = "algo";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,7 +41,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_NAME + " TEXT,"
                 + KEY_GENDER + " TEXT,"
                 + KEY_NOTE + " TEXT,"
-                + KEY_PEOPLE + " TEXT" + ")";
+                + KEY_PEOPLE + " TEXT,"
+                + KEY_ALGO + " TEXT" + ")";
         db.execSQL(CREATE_HISTORY_TABLE);
     }
 
@@ -50,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);*/
     }
 
-    public void addHistory(String fileName, String name, String gender, String note, String people) {
+    public void addHistory(String fileName, String name, String gender, String note, String people, String algo) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -59,6 +61,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_GENDER, gender);
         values.put(KEY_NOTE, note);
         values.put(KEY_PEOPLE, people);
+        values.put(KEY_ALGO, algo);
 
         db.insert(TABLE_HISTORY, null, values);
         db.close();
@@ -84,7 +87,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getString(4));
+                        cursor.getString(4),
+                        cursor.getString(5));
                 historyList.add(history);
             } while (cursor.moveToNext());
         }

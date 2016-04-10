@@ -2,6 +2,7 @@ package xyz.pongsakorn.policeeye.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.ViewPager;
@@ -26,10 +27,9 @@ import xyz.pongsakorn.policeeye.R;
 import xyz.pongsakorn.policeeye.adapter.ResultPagerAdapter;
 import xyz.pongsakorn.policeeye.utils.DatabaseHandler;
 import xyz.pongsakorn.policeeye.utils.SketchMatchSDK;
+import xyz.pongsakorn.policeeye.utils.Utils;
 
 public class ResultActivity extends AppCompatActivity {
-
-    private final String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/PoliceEye/";
 
     String fileName;
     String name;
@@ -55,7 +55,8 @@ public class ResultActivity extends AppCompatActivity {
         name = intent.getStringExtra("name");
         gender = intent.getStringExtra("gender");
         note = intent.getStringExtra("note");
-        Type type = new TypeToken<ArrayList<SketchMatchSDK.Person>>() {}.getType();
+        Type type = new TypeToken<ArrayList<SketchMatchSDK.Person>>() {
+        }.getType();
         final ArrayList<SketchMatchSDK.Person> people = new Gson().fromJson(getIntent().getStringExtra("people"), type);
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -66,7 +67,7 @@ public class ResultActivity extends AppCompatActivity {
         txtOrder = (TextView) findViewById(R.id.txtOrder);
 
         Glide.with(ResultActivity.this)
-                .load(new File(file_path + fileName))
+                .load(new File(Utils.file_path + "/" + fileName))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(ivSketch);
         //ivSketch.setImageBitmap(sketchBitmap);
@@ -88,7 +89,7 @@ public class ResultActivity extends AppCompatActivity {
         });
         txtOrder.setText("1/" + pagerAdapter.getCount());
 
-        if (note.length()>50) {
+        if (note.length() > 50) {
             btnViewNote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -105,10 +106,6 @@ public class ResultActivity extends AppCompatActivity {
             btnViewNote.setText(note);
             btnViewNote.setTextColor(getResources().getColor(R.color.colorPrimary));
         }
-
-
-
-
     }
 
     @Override
@@ -124,6 +121,13 @@ public class ResultActivity extends AppCompatActivity {
         if (id == R.id.action_delete) {
             DatabaseHandler db = new DatabaseHandler(ResultActivity.this);
             db.deleteHistory(fileName);
+            Utils.deleteJpgFile(ResultActivity.this, fileName);
+            Utils.deleteJpgFile(ResultActivity.this, fileName.replace(".jpg", "") + "-jaw.jpg");
+            Utils.deleteJpgFile(ResultActivity.this, fileName.replace(".jpg", "") + "-hair.jpg");
+            Utils.deleteJpgFile(ResultActivity.this, fileName.replace(".jpg", "") + "-eyebrows.jpg");
+            Utils.deleteJpgFile(ResultActivity.this, fileName.replace(".jpg", "") + "-eyes.jpg");
+            Utils.deleteJpgFile(ResultActivity.this, fileName.replace(".jpg", "") + "-nose.jpg");
+            Utils.deleteJpgFile(ResultActivity.this, fileName.replace(".jpg", "") + "-mouth.jpg");
             Intent resultIntent = new Intent();
             setResult(HistoryActivity.RESULT_DELETE, resultIntent);
             finish();
