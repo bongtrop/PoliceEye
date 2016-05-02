@@ -123,8 +123,12 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(String error) {
-                //Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+            public void onFail(final String error) {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(DetailActivity.this, error, Toast.LENGTH_LONG).show();
+                    }
+                });
                 dialog.dismiss();
             }
         };
@@ -152,7 +156,7 @@ public class DetailActivity extends AppCompatActivity {
                 dialog.show();
 
                 gender = (radGroupGender.getCheckedRadioButtonId() == R.id.radMale) ? "Male" : "Female";
-                algo = (radGroupAlgo.getCheckedRadioButtonId() == R.id.radSURF) ? "usurf" : "stringgrammar";
+                algo = (radGroupAlgo.getCheckedRadioButtonId() == R.id.radSURF) ? "usurf" : "strgrammar";
 
                 if (algo.equals("usurf")) {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();

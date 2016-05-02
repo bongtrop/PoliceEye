@@ -56,6 +56,7 @@
         <item>@mipmap/hair554</item>
         <item>@mipmap/hair555</item>
         <item>@mipmap/hair557</item>
+        <item>@mipmap/hair_yuth</item>
     </array>
 
     <array name="res_jaw_styles">
@@ -91,6 +92,7 @@
         <item>@mipmap/jaw554</item>
         <item>@mipmap/jaw555</item>
         <item>@mipmap/jaw557</item>
+        <item>@mipmap/jaw_yuth</item>
     </array>
 
     <array name="res_eyebrows_styles">
@@ -126,6 +128,7 @@
         <item>@mipmap/eyebrows554</item>
         <item>@mipmap/eyebrows555</item>
         <item>@mipmap/eyebrows557</item>
+        <item>@mipmap/eyebrows_yuth</item>
     </array>
 
     <array name="res_eyes_styles">
@@ -161,6 +164,7 @@
         <item>@mipmap/eyes554</item>
         <item>@mipmap/eyes555</item>
         <item>@mipmap/eyes557</item>
+        <item>@mipmap/eyes_yuth</item>
     </array>
 
     <array name="res_nose_styles">
@@ -196,6 +200,7 @@
         <item>@mipmap/nose554</item>
         <item>@mipmap/nose555</item>
         <item>@mipmap/nose557</item>
+        <item>@mipmap/nose_yuth</item>
     </array>
 
     <array name="res_mouth_styles">
@@ -231,6 +236,7 @@
         <item>@mipmap/mouth554</item>
         <item>@mipmap/mouth555</item>
         <item>@mipmap/mouth557</item>
+        <item>@mipmap/mouth_yuth</item>
     </array>
 
 </resources>

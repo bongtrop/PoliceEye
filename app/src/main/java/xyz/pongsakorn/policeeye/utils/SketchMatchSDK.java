@@ -43,7 +43,7 @@ public class SketchMatchSDK {
     public void retrievalUSURF(byte[] image, String sex, String algo, final Listener listener) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("image", "sketch", RequestBody.create(MediaType.parse("image/jpg"), image))
+                .addFormDataPart("full", "sketch", RequestBody.create(MediaType.parse("image/jpg"), image))
                 .addFormDataPart("sex", sex)
                 .addFormDataPart("algo", algo)
                 .build();
@@ -54,7 +54,7 @@ public class SketchMatchSDK {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("jaw", "jaw", RequestBody.create(MediaType.parse("image/jpg"), jaw))
-                .addFormDataPart("hair", "hair", RequestBody.create(MediaType.parse("image/jpg"), hair))
+                        //.addFormDataPart("hair", "hair", RequestBody.create(MediaType.parse("image/jpg"), hair))
                 .addFormDataPart("eyebrows", "eyebrows", RequestBody.create(MediaType.parse("image/jpg"), eyebrows))
                 .addFormDataPart("eyes", "eyes", RequestBody.create(MediaType.parse("image/jpg"), eyes))
                 .addFormDataPart("nose", "nose", RequestBody.create(MediaType.parse("image/jpg"), nose))
